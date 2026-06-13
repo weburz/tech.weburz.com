@@ -67,5 +67,23 @@ defineOgImage("Docs", {
         />
       </div>
     </div>
+
+    <figure class="mt-14 sm:mt-20">
+      <NuxtImg
+        src="/blog/vitosha.webp"
+        alt="Sunset over a sea of clouds, seen from the snowy slopes of Vitosha mountain"
+        width="2000"
+        height="600"
+        fit="cover"
+        format="webp"
+        quality="75"
+        loading="lazy"
+        class="w-full aspect-[10/3] object-cover rounded-lg"
+      />
+      <figcaption class="mt-3 text-xs text-muted">
+        Vitosha, above Sofia. No open roles today — the mountain isn't going
+        anywhere, and neither are we.
+      </figcaption>
+    </figure>
   </UContainer>
 </template>

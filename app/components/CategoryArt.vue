@@ -15,10 +15,13 @@ const gradient = computed(
 
 <template>
   <div class="relative w-full aspect-[16/9] overflow-hidden rounded-md isolate">
-    <img
+    <NuxtImg
       v-if="cover"
       :src="cover"
       :alt="alt ?? ''"
+      sizes="640px md:768px lg:1024px"
+      format="webp"
+      quality="80"
       class="absolute inset-0 size-full object-cover"
     />
     <template v-else>

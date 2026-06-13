@@ -4,6 +4,7 @@ description: Kicking off the Weburz engineering blog — what to expect, and why
 date: 2026-05-22
 author: Weburz Engineering
 category: People
+cover: /blog/vitosha.webp
 ---
 
 We're starting an engineering blog.
