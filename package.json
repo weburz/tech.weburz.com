@@ -22,7 +22,7 @@
     "@takumi-rs/core": "^1.6.0",
     "@vueuse/core": "^14.3.0",
     "minimark": "^1.0.0",
-    "nuxt": "^4.4.6",
+    "nuxt": "^4.4.7",
     "nuxt-og-image": "^6.5.1",
     "tailwindcss": "^4.3.2",
     "ufo": "^1.6.4"
