@@ -7,7 +7,7 @@
 # bind-mounted paths (.nuxt, .output, .data, etc.) land with the same uid as
 # the host user instead of root.
 ###############################################################################
-FROM node:24-alpine AS development
+FROM node:25-alpine AS development
 
 RUN corepack enable && corepack prepare pnpm@11.1.3 --activate
 
