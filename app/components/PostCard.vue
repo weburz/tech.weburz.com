@@ -1,27 +1,27 @@
 <script setup lang="ts">
-const props = defineProps<{
-  post: {
-    path?: string;
-    title?: string;
-    description?: string;
-    date?: string | Date;
-    author?: string;
-    category?: string;
-    cover?: string;
-  };
-  featured?: boolean;
-}>();
+  const props = defineProps<{
+    post: {
+      path?: string;
+      title?: string;
+      description?: string;
+      date?: string | Date;
+      author?: string;
+      category?: string;
+      cover?: string;
+    };
+    featured?: boolean;
+  }>();
 
-const formatted = useFormattedDate(() => props.post.date, "short");
+  const formatted = useFormattedDate(() => props.post.date, "short");
 </script>
 
 <template>
   <NuxtLink :to="post.path" class="group block">
     <div
       class="flex flex-col gap-5"
-      :class="featured ? 'sm:flex-row sm:gap-8 sm:items-center' : ''"
+      :class="featured ? 'sm:flex-row sm:items-center sm:gap-8' : ''"
     >
-      <div :class="featured ? 'sm:w-3/5 shrink-0' : 'w-full'">
+      <div :class="featured ? 'shrink-0 sm:w-3/5' : 'w-full'">
         <CategoryArt
           :category="post.category"
           :cover="post.cover"
@@ -29,20 +29,20 @@ const formatted = useFormattedDate(() => props.post.date, "short");
         />
       </div>
 
-      <div class="flex-1 min-w-0 flex flex-col gap-3">
-        <div class="flex items-center gap-3 flex-wrap">
+      <div class="flex min-w-0 flex-1 flex-col gap-3">
+        <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="post.category" :category="post.category" />
           <time
             v-if="formatted"
             :datetime="formatted.iso"
-            class="text-xs text-muted"
+            class="text-muted text-xs"
           >
             {{ formatted.display }}
           </time>
         </div>
 
         <h2
-          class="font-semibold text-default tracking-tight group-hover:underline decoration-2 underline-offset-4"
+          class="text-default font-semibold tracking-tight decoration-2 underline-offset-4 group-hover:underline"
           :class="
             featured ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-lg sm:text-xl'
           "

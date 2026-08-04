@@ -1,57 +1,57 @@
 <script setup lang="ts">
-import { useClipboard } from "@vueuse/core";
+  import { useClipboard } from "@vueuse/core";
 
-const route = useRoute();
-const toast = useToast();
-const { copy, copied } = useClipboard();
-const site = useSiteConfig();
+  const route = useRoute();
+  const toast = useToast();
+  const { copy, copied } = useClipboard();
+  const site = useSiteConfig();
 
-const mdPath = computed(() => `${site.url}/raw${route.path}.md`);
+  const mdPath = computed(() => `${site.url}/raw${route.path}.md`);
 
-const items = computed(() => [
-  {
-    label: "Copy Markdown link",
-    icon: "i-lucide-link",
-    onSelect: async () => {
-      await copy(mdPath.value);
-      toast.add({
-        title: "Copied to clipboard",
-        icon: "i-lucide-check-circle",
-      });
+  const items = computed(() => [
+    {
+      icon: "i-lucide-link",
+      label: "Copy Markdown link",
+      onSelect: async (): Promise<void> => {
+        await copy(mdPath.value);
+        toast.add({
+          icon: "i-lucide-check-circle",
+          title: "Copied to clipboard",
+        });
+      },
     },
-  },
-  {
-    label: "View as Markdown",
-    icon: "i-simple-icons:markdown",
-    target: "_blank",
-    to: `/raw${route.path}.md`,
-  },
-  {
-    label: "Open in ChatGPT",
-    icon: "i-simple-icons:openai",
-    target: "_blank",
-    to: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
-  },
-  {
-    label: "Open in Claude",
-    icon: "i-simple-icons:anthropic",
-    target: "_blank",
-    to: `https://claude.ai/new?q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
-  },
-]);
+    {
+      icon: "i-simple-icons:markdown",
+      label: "View as Markdown",
+      target: "_blank",
+      to: `/raw${route.path}.md`,
+    },
+    {
+      icon: "i-simple-icons:openai",
+      label: "Open in ChatGPT",
+      target: "_blank",
+      to: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
+    },
+    {
+      icon: "i-simple-icons:anthropic",
+      label: "Open in Claude",
+      target: "_blank",
+      to: `https://claude.ai/new?q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
+    },
+  ]);
 
-const copyPage = async () => {
-  try {
-    await copy(await $fetch<string>(`/raw${route.path}.md`));
-  } catch {
-    toast.add({
-      title: "Copy failed",
-      description: "Could not copy the page contents.",
-      icon: "i-lucide-alert-circle",
-      color: "error",
-    });
-  }
-};
+  const copyPage = async (): Promise<void> => {
+    try {
+      await copy(await $fetch<string>(`/raw${route.path}.md`));
+    } catch {
+      toast.add({
+        color: "error",
+        description: "Could not copy the page contents.",
+        icon: "i-lucide-alert-circle",
+        title: "Copy failed",
+      });
+    }
+  };
 </script>
 
 <template>

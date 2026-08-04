@@ -1,48 +1,48 @@
 <script setup lang="ts">
-useSeoMeta({
-  title: "Careers",
-  ogTitle: "Careers",
-  description:
-    "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
-  ogDescription:
-    "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
-});
+  useSeoMeta({
+    description:
+      "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
+    ogDescription:
+      "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
+    ogTitle: "Careers",
+    title: "Careers",
+  });
 
-defineOgImage("Docs", {
-  title: "Careers",
-  description:
-    "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
-});
+  defineOgImage("Docs", {
+    description:
+      "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
+    title: "Careers",
+  });
 </script>
 
 <template>
   <UContainer class="py-12 sm:py-20">
     <div class="max-w-2xl">
-      <p class="text-xs uppercase tracking-wider text-muted">Careers</p>
-      <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">
+      <p class="text-muted text-xs tracking-wider uppercase">Careers</p>
+      <h1 class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
         Role not found.
       </h1>
 
       <div
-        class="mt-8 rounded-lg border border-default bg-elevated/50 overflow-hidden font-mono text-sm"
+        class="border-default bg-elevated/50 mt-8 overflow-hidden rounded-lg border font-mono text-sm"
       >
         <div
-          class="flex items-center gap-2 px-4 py-2 bg-elevated border-b border-default"
+          class="bg-elevated border-default flex items-center gap-2 border-b px-4 py-2"
         >
           <span class="size-3 rounded-full bg-red-400/70" />
           <span class="size-3 rounded-full bg-amber-300/80" />
           <span class="size-3 rounded-full bg-green-400/70" />
-          <span class="ml-2 text-xs text-muted">weburz — careers</span>
+          <span class="text-muted ml-2 text-xs">weburz — careers</span>
         </div>
         <pre
-          class="px-4 py-4 leading-relaxed text-default whitespace-pre-wrap"
+          class="text-default px-4 py-4 leading-relaxed whitespace-pre-wrap"
         ><span class="text-muted">$</span> ls -la open-roles/
 <span class="text-muted">ls: cannot access 'open-roles/': No such file or directory</span>
 <span class="text-muted">$</span> <span class="text-muted"># not hiring right now — but the inbox is open.</span>
 <span class="text-muted">$</span> <span class="inline-block w-2 h-4 bg-default/70 align-middle animate-pulse" /></pre>
       </div>
 
-      <div class="mt-8 space-y-4 text-default">
+      <div class="text-default mt-8 space-y-4">
         <p>
           Straight answer: <strong>we're not hiring right now.</strong> Weburz
           is small and we don't open roles on a fixed cadence — they show up
@@ -78,9 +78,9 @@ defineOgImage("Docs", {
         format="webp"
         quality="75"
         loading="lazy"
-        class="w-full aspect-[10/3] object-cover rounded-lg"
+        class="aspect-[10/3] w-full rounded-lg object-cover"
       />
-      <figcaption class="mt-3 text-xs text-muted">
+      <figcaption class="text-muted mt-3 text-xs">
         Vitosha, above Sofia. No open roles today — the mountain isn't going
         anywhere, and neither are we.
       </figcaption>

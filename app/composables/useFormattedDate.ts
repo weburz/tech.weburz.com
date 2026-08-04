@@ -1,29 +1,36 @@
+const ISO_DATE_LENGTH = 10;
+
 const longFmt = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "long",
   day: "numeric",
+  month: "long",
+  year: "numeric",
 });
 
 const shortFmt = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "short",
   day: "numeric",
+  month: "short",
+  year: "numeric",
 });
 
 const formatDate = (
   raw: string | Date | undefined,
   variant: "long" | "short",
-) => {
-  if (!raw) return null;
-  const d = raw instanceof Date ? raw : new Date(raw);
-  if (Number.isNaN(d.getTime())) return null;
+): { display: string; iso: string } | undefined => {
+  if (raw === undefined) {
+    return undefined;
+  }
+  const date = raw instanceof Date ? raw : new Date(raw);
+  if (Number.isNaN(date.getTime())) {
+    return undefined;
+  }
   return {
-    display: (variant === "short" ? shortFmt : longFmt).format(d),
-    iso: d.toISOString().slice(0, 10),
+    display: (variant === "short" ? shortFmt : longFmt).format(date),
+    iso: date.toISOString().slice(0, ISO_DATE_LENGTH),
   };
 };
 
 export const useFormattedDate = (
   source: MaybeRefOrGetter<string | Date | undefined>,
   variant: "long" | "short" = "long",
-) => computed(() => formatDate(toValue(source), variant));
+): ComputedRef<{ display: string; iso: string } | undefined> =>
+  computed(() => formatDate(toValue(source), variant));

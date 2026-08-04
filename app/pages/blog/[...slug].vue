@@ -1,70 +1,70 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: "blog",
-});
-
-const route = useRoute();
-const { toc } = useAppConfig();
-
-const { data: page } = await useAsyncData(route.path, () =>
-  queryCollection("blog").path(route.path).first(),
-);
-const links = useTocBottomLinks(page);
-if (!page.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "Post not found",
-    fatal: true,
+  definePageMeta({
+    layout: "blog",
   });
-}
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
-  queryCollectionItemSurroundings("blog", route.path, {
-    fields: ["description", "date"],
-  }),
-);
+  const route = useRoute();
+  const { toc } = useAppConfig();
 
-const title = page.value.seo?.title || page.value.title;
-const description = page.value.seo?.description || page.value.description;
+  const { data: page } = await useAsyncData(route.path, () =>
+    queryCollection("blog").path(route.path).first(),
+  );
+  const links = useTocBottomLinks(page);
+  if (!page.value) {
+    throw createError({
+      fatal: true,
+      statusCode: 404,
+      statusMessage: "Post not found",
+    });
+  }
 
-useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description,
-});
+  const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
+    queryCollectionItemSurroundings("blog", route.path, {
+      fields: ["description", "date"],
+    }),
+  );
 
-const formatted = useFormattedDate(() => page.value?.date, "long");
+  const title = page.value.seo?.title || page.value.title;
+  const description = page.value.seo?.description || page.value.description;
 
-defineOgImage("Docs", {
-  title,
-  description,
-  headline: page.value.category || undefined,
-});
+  useSeoMeta({
+    description,
+    ogDescription: description,
+    ogTitle: title,
+    title,
+  });
+
+  const formatted = useFormattedDate(() => page.value?.date, "long");
+
+  defineOgImage("Docs", {
+    description,
+    headline: page.value.category || undefined,
+    title,
+  });
 </script>
 
 <template>
   <UPage v-if="page">
     <header class="mb-10 sm:mb-12">
       <div class="max-w-3xl">
-        <div class="flex items-center gap-3 flex-wrap">
+        <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="page.category" :category="page.category" />
           <time
             v-if="formatted"
             :datetime="formatted.iso"
-            class="text-sm text-muted"
+            class="text-muted text-sm"
           >
             {{ formatted.display }}
           </time>
         </div>
 
         <h1
-          class="mt-5 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight"
+          class="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
         >
           {{ page.title }}
         </h1>
 
-        <p v-if="page.description" class="mt-4 text-lg text-muted">
+        <p v-if="page.description" class="text-muted mt-4 text-lg">
           {{ page.description }}
         </p>
       </div>
@@ -78,7 +78,7 @@ defineOgImage("Docs", {
       </div>
 
       <div
-        class="mt-8 pt-6 border-t border-default flex items-center justify-between gap-4 flex-wrap"
+        class="border-default mt-8 flex flex-wrap items-center justify-between gap-4 border-t pt-6"
       >
         <PostAuthor v-if="page.author" :name="page.author" size="md" />
         <span v-else />
@@ -98,7 +98,7 @@ defineOgImage("Docs", {
       <UContentToc :title="toc?.title" :links="page.body?.toc?.links">
         <template v-if="toc?.bottom" #bottom>
           <div
-            class="hidden lg:block space-y-6"
+            class="hidden space-y-6 lg:block"
             :class="{ 'mt-6!': page.body?.toc?.links?.length }"
           >
             <USeparator v-if="page.body?.toc?.links?.length" type="dashed" />

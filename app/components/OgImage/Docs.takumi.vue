@@ -1,40 +1,40 @@
 <script setup lang="ts">
-defineOptions({
-  inheritAttrs: false,
-});
+  defineOptions({
+    inheritAttrs: false,
+  });
 
-defineProps<{
-  headline?: string;
-  title?: string;
-  description?: string;
-}>();
+  defineProps<{
+    headline?: string;
+    title?: string;
+    description?: string;
+  }>();
 
-const site = useSiteConfig();
-const host = computed(() => new URL(site.url).host);
+  const site = useSiteConfig();
+  const host = computed(() => new URL(site.url).host);
 </script>
 
 <template>
   <div
-    class="w-full h-full flex bg-neutral-950 relative overflow-hidden"
+    class="relative flex h-full w-full overflow-hidden bg-neutral-950"
     data-theme="dark"
   >
-    <div class="absolute top-0 left-0 w-1.5 h-full bg-primary-400" />
+    <div class="bg-primary-400 absolute top-0 left-0 h-full w-1.5" />
 
-    <div class="flex flex-col justify-between flex-1 px-20 py-16">
+    <div class="flex flex-1 flex-col justify-between px-20 py-16">
       <div />
 
       <div class="flex flex-col gap-5">
-        <span v-if="headline" class="text-2xl font-medium text-primary-400">
+        <span v-if="headline" class="text-primary-400 text-2xl font-medium">
           {{ headline }}
         </span>
 
-        <h1 v-if="title" class="text-6xl font-bold text-highlighted">
+        <h1 v-if="title" class="text-highlighted text-6xl font-bold">
           {{ title }}
         </h1>
 
         <p
           v-if="description"
-          class="text-3xl/11 text-muted"
+          class="text-muted text-3xl/11"
           :style="{ maxHeight: '5.5rem', overflow: 'hidden' }"
         >
           {{ description }}
@@ -57,8 +57,8 @@ const host = computed(() => new URL(site.url).host);
             fill="#FDE047"
           />
         </svg>
-        <div class="h-px flex-1 bg-border" />
-        <span class="text-xl text-dimmed">{{ host }}</span>
+        <div class="bg-border h-px flex-1" />
+        <span class="text-dimmed text-xl">{{ host }}</span>
       </div>
     </div>
   </div>

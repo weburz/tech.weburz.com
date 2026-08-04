@@ -16,8 +16,8 @@ body:
       description:
         Describe the bug clearly. What did you see, and what did you expect to
         see instead?
-      placeholder: When I visit /blog/<slug>, the page does X. I expected it to
-        do Y.
+      placeholder:
+        When I visit /blog/<slug>, the page does X. I expected it to do Y.
     validations:
       required: true
 
@@ -25,8 +25,8 @@ body:
     id: steps
     attributes:
       label: Steps to reproduce
-      description: List the exact steps someone else can follow to see the same
-        bug.
+      description:
+        List the exact steps someone else can follow to see the same bug.
       placeholder: |
         1. Open https://tech.weburz.com
         2. Click on ...
@@ -59,13 +59,15 @@ body:
     id: logs
     attributes:
       label: Relevant log output
-      description: Console errors, network failures, anything related. No need
-        for backticks — this auto-formats as a shell block.
+      description:
+        Console errors, network failures, anything related. No need for
+        backticks — this auto-formats as a shell block.
       render: Shell
 
   - type: textarea
     id: screenshots
     attributes:
       label: Screenshots / video
-      description: For visual bugs, a screenshot or short screen recording is
-        worth far more than a description. Drag and drop into the box.
+      description:
+        For visual bugs, a screenshot or short screen recording is worth far
+        more than a description. Drag and drop into the box.

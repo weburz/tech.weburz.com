@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { getCategoryStyle } from "~/utils/categories";
+  import { getCategoryStyle } from "~/utils/categories";
 
-const props = defineProps<{ category: string }>();
-const style = computed(() => getCategoryStyle(props.category));
+  const props = defineProps<{ category: string }>();
+  const style = computed(() => getCategoryStyle(props.category));
 </script>
 
 <template>
   <span
-    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border"
+    class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium"
     :style="{
       backgroundColor: style.from,
       color: style.to,

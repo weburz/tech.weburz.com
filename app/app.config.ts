@@ -1,73 +1,73 @@
 export default defineAppConfig({
-  ui: {
-    colors: {
-      primary: "burzyellow",
-      secondary: "burzblue",
-      neutral: "slate",
-      success: "green",
-      info: "blue",
-      warning: "amber",
-      error: "red",
-    },
-    footer: {
-      slots: {
-        root: "border-t border-default",
-        left: "text-sm text-muted",
+  footer: {
+    colorMode: false,
+    credits: `© ${new Date().getFullYear()} Weburz`,
+    links: [
+      {
+        "aria-label": "RSS feed",
+        external: true,
+        icon: "i-lucide-rss",
+        to: "/rss.xml",
       },
-    },
-  },
-  seo: {
-    siteName: "Tech at Weburz",
+      {
+        "aria-label": "Weburz on GitHub",
+        icon: "i-simple-icons-github",
+        target: "_blank",
+        to: "https://github.com/Weburz",
+      },
+      {
+        "aria-label": "weburz.com",
+        icon: "i-lucide-globe",
+        target: "_blank",
+        to: "https://weburz.com",
+      },
+    ],
   },
   header: {
-    title: "tech.weburz",
-    to: "/",
-    search: true,
     colorMode: true,
+    links: [
+      {
+        "aria-label": "tech.weburz.com on GitHub",
+        icon: "i-simple-icons-github",
+        target: "_blank",
+        to: "https://github.com/Weburz/tech.weburz.com",
+      },
+    ],
     nav: [
       { label: "Blog", to: "/blog" },
       { label: "Open Source", to: "/open-source" },
       { label: "Careers", to: "/careers" },
     ],
-    links: [
-      {
-        icon: "i-simple-icons-github",
-        to: "https://github.com/Weburz/tech.weburz.com",
-        target: "_blank",
-        "aria-label": "tech.weburz.com on GitHub",
-      },
-    ],
+    search: true,
+    title: "tech.weburz",
+    to: "/",
   },
-  footer: {
-    credits: `© ${new Date().getFullYear()} Weburz`,
-    colorMode: false,
-    links: [
-      {
-        icon: "i-lucide-rss",
-        to: "/rss.xml",
-        external: true,
-        "aria-label": "RSS feed",
-      },
-      {
-        icon: "i-simple-icons-github",
-        to: "https://github.com/Weburz",
-        target: "_blank",
-        "aria-label": "Weburz on GitHub",
-      },
-      {
-        icon: "i-lucide-globe",
-        to: "https://weburz.com",
-        target: "_blank",
-        "aria-label": "weburz.com",
-      },
-    ],
+  seo: {
+    siteName: "Tech at Weburz",
   },
   toc: {
-    title: "Table of Contents",
     bottom: {
-      title: "Page",
       edit: "https://github.com/Weburz/tech.weburz.com/edit/main/content",
       links: [],
+      title: "Page",
+    },
+    title: "Table of Contents",
+  },
+  ui: {
+    colors: {
+      error: "red",
+      info: "blue",
+      neutral: "slate",
+      primary: "burzyellow",
+      secondary: "burzblue",
+      success: "green",
+      warning: "amber",
+    },
+    footer: {
+      slots: {
+        left: "text-sm text-muted",
+        root: "border-t border-default",
+      },
     },
   },
 });

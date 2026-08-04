@@ -61,19 +61,19 @@ tasks:
     cmds:
       - pnpm run lint
       - pnpm run typecheck
-      - pnpm run format:check
+      - pnpm run fmt:check
 
   format:
-    desc: Auto-format the codebase with Prettier.
+    desc: Auto-format the codebase with Oxfmt.
     summary: |
-      Run Prettier in --write mode across the repository. The matching
+      Run Oxfmt in write mode across the repository. The matching
       --check pass runs as part of `task qa-checks`.
-    cmd: pnpm run format
+    cmd: pnpm run fmt
 
   qa-checks:
     desc: Run all QA checks on the source code.
     summary: |
-      Run ESLint, the Nuxt typecheck, and all pre-commit hooks against the
+      Run Oxlint, the Nuxt typecheck, and all pre-commit hooks against the
       full repository. Run this before pushing to main.
     cmds:
       - task: qa-checks:pnpm
