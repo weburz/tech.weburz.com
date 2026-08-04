@@ -1,44 +1,38 @@
 version: 2
 
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "monthly"
+      interval: weekly
       time: "06:00"
-      timezone: "Europe/Sofia"
+      timezone: Asia/Kolkata
     commit-message:
       prefix: "chore(deps): "
-    labels:
-      - "dependencies"
-    assignees:
-      - sagar-kap
+    labels: [dependencies]
+    assignees: [jarmos-san]
     open-pull-requests-limit: 3
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "monthly"
+      interval: monthly
       time: "06:00"
-      timezone: "Europe/Sofia"
+      timezone: Asia/Kolkata
     commit-message:
       prefix: "chore(deps): "
-    labels:
-      - "dependencies"
-    assignees:
-      - sagar-kap
+    labels: [dependencies]
+    assignees: [jarmos-san]
     open-pull-requests-limit: 3
 
-  - package-ecosystem: "docker"
-    directory: "/"
+  - package-ecosystem: docker
+    directory: /
     schedule:
-      interval: "monthly"
+      interval: monthly
       time: "06:00"
-      timezone: "Europe/Sofia"
+      timezone: Asia/Kolkata
     commit-message:
       prefix: "chore(deps): "
-    labels:
-      - "dependencies"
-    assignees:
-      - sagar-kap
+    labels: [dependencies]
+    assignees: [jarmos-san]
     open-pull-requests-limit: 3
