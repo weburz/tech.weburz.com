@@ -1,5 +1,2 @@
-# The contents of this file are taken from the following example:
-# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#example-of-a-codeowners-file
-
 # Global owners of all the files in the repository
-* 	@Sagar-Kap @Jarmos-san
+* @Jarmos-san
