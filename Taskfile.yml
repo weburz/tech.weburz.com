@@ -4,30 +4,11 @@ silent: true
 
 tasks:
   default:
-    desc: Run the dev server inside Docker on http://localhost:3001.
-    summary: |
-      Build the `development` stage of the Dockerfile and run it with the
-      project source bind-mounted in, so file edits hot-reload as they
-      would running locally.
+    desc: List all commands
+    cmd: task --list
 
-      An anonymous volume covers /app/node_modules so the host's
-      node_modules directory (if any) doesn't shadow the install done
-      inside the image.
-
-      For fast iteration without the container spin-up, use `task dev:local`.
-      For a production-build parity check, use `task preview`.
-    deps:
-      - setup
-    cmds:
-      - docker build --target development --tag tech-weburz-dev:latest .
-      - docker run --rm --name tech-weburz-dev --user "$(id -u):$(id -g)" -p 3001:3001 -v "$PWD":/app -v /app/node_modules tech-weburz-dev:latest
-
-  dev:local:
-    desc: Run the dev server directly on the host (no Docker).
-    summary: |
-      Start the Nuxt dev server with hot-reload on http://localhost:3001,
-      using the host's Node and pnpm. Faster startup than `task default`
-      but requires `task setup` to have been run first.
+  dev:
+    desc: Run the dev server.
     cmd: pnpm run dev
 
   setup:pnpm:
@@ -35,7 +16,7 @@ tasks:
     sources:
       - package.json
       - pnpm-lock.yaml
-    cmd: pnpm install --frozen-lockfile
+    cmd: pnpm install
 
   setup:pre-commit:
     internal: true
@@ -71,9 +52,9 @@ tasks:
     summary: |
       Run `task build` then serve `.output/public` on http://localhost:3000
       so you can sanity-check the same artifact GitHub Pages uploads.
-    deps:
-      - build
-    cmd: pnpm exec nuxt preview
+    cmds:
+      - task: build
+      - pnpm run preview
 
   qa-checks:pnpm:
     internal: true
@@ -99,13 +80,10 @@ tasks:
       - pre-commit run --all-files
 
   clean:
-    desc: Wipe build artifacts, dependencies, and dev/preview containers.
+    desc: Wipe build artifacts and dependencies.
     summary: |
       Remove .nuxt, .output, node_modules, the Task cache, and any
-      `tech-weburz-dev` or `tech-weburz` containers left behind by
-      `task default` or `task preview` so the next `task setup` and
-      `task default` start fully clean.
+      other artifacts left behind by `task default` or `task preview` so the next
+      `task setup` and `task default` start fully clean.
     cmds:
-      - rm -rf .nuxt .output .data .cache node_modules .task
-      - docker rm -f tech-weburz-dev 2>/dev/null || true
-      - docker image rm -f tech-weburz-dev:latest 2>/dev/null || true
+      - rm --recursive --force .nuxt .output .data .cache node_modules .task
