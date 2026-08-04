@@ -14,27 +14,27 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.108",
-    "@iconify-json/simple-icons": "^1.2.88",
+    "@iconify-json/lucide": "^1.2.121",
+    "@iconify-json/simple-icons": "^1.2.93",
     "@nuxt/content": "^3.15.2",
-    "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.9.0",
+    "@nuxt/image": "^2.1.0",
+    "@nuxt/ui": "^4.10.0",
     "@takumi-rs/core": "^1.8.7",
     "@vueuse/core": "^14.4.0",
     "minimark": "^1.0.0",
-    "nuxt": "^4.4.7",
-    "nuxt-og-image": "^6.5.1",
-    "tailwindcss": "^4.3.2",
+    "nuxt": "^4.5.1",
+    "nuxt-og-image": "^6.7.5",
+    "tailwindcss": "^4.3.3",
     "ufo": "^1.6.4"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.15.2",
-    "eslint": "^10.4.0",
+    "@nuxt/eslint": "^1.16.0",
+    "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.8.1",
+    "prettier": "^3.9.6",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.3"
+    "vue-tsc": "^3.3.9"
   },
   "packageManager": "pnpm@11.1.3"
 }
