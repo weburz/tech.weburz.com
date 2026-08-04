@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { header } = useAppConfig();
+  const { header } = useAppConfig();
 </script>
 
 <template>
@@ -9,8 +9,8 @@ const { header } = useAppConfig();
   >
     <template #title>
       <span class="flex items-center gap-2">
-        <AppLogo class="w-auto h-6 shrink-0" />
-        <span v-if="header?.title" class="font-semibold text-default">
+        <AppLogo class="h-6 w-auto shrink-0" />
+        <span v-if="header?.title" class="text-default font-semibold">
           {{ header.title }}
         </span>
       </span>

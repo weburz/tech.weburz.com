@@ -1,13 +1,14 @@
-import { getSiteConfig } from "#site-config/server/composables";
 import { queryCollection } from "@nuxt/content/server";
 
-const escape = (s: string | undefined) =>
-  (s ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
+import { getSiteConfig } from "#site-config/server/composables";
+
+const escape = (text: string | undefined): string =>
+  (text ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
 
 export default eventHandler(async (event) => {
   const site = getSiteConfig(event);
@@ -18,18 +19,20 @@ export default eventHandler(async (event) => {
     .all();
 
   const items = posts
-    .map((p) => {
-      const link = `${baseUrl}${p.path}`;
-      const pubDate = new Date(p.date ?? Date.now()).toUTCString();
-      const author = p.author ? `<author>${escape(p.author)}</author>` : "";
-      const category = p.category
-        ? `<category>${escape(p.category)}</category>`
+    .map((post) => {
+      const link = `${baseUrl}${post.path}`;
+      const pubDate = new Date(post.date ?? Date.now()).toUTCString();
+      const author = post.author
+        ? `<author>${escape(post.author)}</author>`
+        : "";
+      const category = post.category
+        ? `<category>${escape(post.category)}</category>`
         : "";
       return `    <item>
-      <title>${escape(p.title)}</title>
+      <title>${escape(post.title)}</title>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
-      <description>${escape(p.description)}</description>
+      <description>${escape(post.description)}</description>
       <pubDate>${pubDate}</pubDate>
       ${author}
       ${category}

@@ -1,10 +1,10 @@
 # tech.weburz.com
 
-The Weburz engineering site — long-form notes, open-source project docs, and
-a Careers page where the answer is "send us a link to something you built."
+The Weburz engineering site — long-form notes, open-source project docs, and a
+Careers page where the answer is "send us a link to something you built."
 
-Live at [tech.weburz.com](https://tech.weburz.com). Built with [Nuxt 4],
-[Nuxt UI v4], and [Nuxt Content]; deployed as a static site to GitHub Pages.
+Live at [tech.weburz.com](https://tech.weburz.com). Built with [Nuxt 4], [Nuxt
+UI v4], and [Nuxt Content]; deployed as a static site to GitHub Pages.
 
 ## Quickstart
 
@@ -65,8 +65,8 @@ Authoring guide for new blog posts and OSS project pages lives in
 The short version:
 
 - **New blog post** → drop a `.md` file in `content/blog/` with `title`,
-  `description`, `date`, `author`, and `category` frontmatter. It appears
-  on the home page and `/blog` automatically.
+  `description`, `date`, `author`, and `category` frontmatter. It appears on the
+  home page and `/blog` automatically.
 - **New OSS project** → drop a `.md` file in `content/open-source/` with
   `title`, `description`, `icon`, `tags`, and `links` frontmatter.
 
@@ -78,29 +78,31 @@ The short version:
 | `task dev:local` | Same dev server, but on the host directly — faster startup.                  |
 | `task build`     | Generate the static site under `.output/public` (the GH Pages artifact).     |
 | `task preview`   | Build the static site and serve `.output/public` on http://localhost:3000.   |
-| `task format`    | Auto-format the codebase with Prettier.                                      |
-| `task qa-checks` | Run ESLint, the Nuxt typecheck, Prettier check, and all pre-commit hooks.    |
+| `task format`    | Auto-format the codebase with Oxfmt.                                         |
+| `task qa-checks` | Run Oxlint, the Nuxt typecheck, Oxfmt check, and all pre-commit hooks.       |
 | `task clean`     | Wipe `node_modules`, `.nuxt`, `.output`, the Task cache, and dev containers. |
 
-`task preview` serves the same static artifact GitHub Pages uploads, so it's
-the closest local parity check before pushing. The site that serves at
+`task preview` serves the same static artifact GitHub Pages uploads, so it's the
+closest local parity check before pushing. The site that serves at
 https://tech.weburz.com is the static build deployed by
-[`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) on every
-push to `main`.
+[`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) on every push
+to `main`.
 
 ## Stack
 
 - [Nuxt 4][Nuxt 4] — the framework.
 - [Nuxt UI v4][Nuxt UI v4] — components, layout primitives, theming.
 - [Nuxt Content][Nuxt Content] — Markdown-driven content pipeline.
-- [`nuxt-og-image`](https://nuxt.com/modules/og-image) — auto-generated social cards.
+- [`nuxt-og-image`](https://nuxt.com/modules/og-image) — auto-generated social
+  cards.
 - [Tailwind 4](https://tailwindcss.com) — styling, via `@nuxt/ui`.
 - [pnpm 11](https://pnpm.io) — package manager.
 - [Task](https://taskfile.dev) — workflow runner.
 
 ## License
 
-Site code is MIT. Content under `content/` is © Weburz; not licensed for redistribution.
+Site code is MIT. Content under `content/` is © Weburz; not licensed for
+redistribution.
 
 [Nuxt 4]: https://nuxt.com
 [Nuxt UI v4]: https://ui.nuxt.com

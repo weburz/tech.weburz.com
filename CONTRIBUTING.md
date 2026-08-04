@@ -17,7 +17,8 @@ pages. Code changes follow the usual Weburz workflow (branch, PR, CI green).
    ```yaml
    ---
    title: How we migrated 14M rows without a maintenance window
-   description: A short, declarative summary. Shows up under the title and on cards.
+   description:
+     A short, declarative summary. Shows up under the title and on cards.
    date: 2026-05-22
    author: Sagar Kapoor
    category: Infrastructure
@@ -33,8 +34,8 @@ pages. Code changes follow the usual Weburz workflow (branch, PR, CI green).
    | `category`    | no       | Drives the chip color + the generated cover art. Must match a known category. |
    | `cover`       | no       | Path to a real image (under `public/`). Overrides the generated tile.         |
 
-   Known categories (`app/utils/categories.ts`):
-   `Infrastructure`, `Data`, `People`, `Open Source`.
+   Known categories (`app/utils/categories.ts`): `Infrastructure`, `Data`,
+   `People`, `Open Source`.
 
    To add a new category, edit `CATEGORY_STYLES` in `app/utils/categories.ts`.
 
@@ -47,8 +48,8 @@ pages. Code changes follow the usual Weburz workflow (branch, PR, CI green).
    task dev:local
    ```
 
-   Open http://localhost:3001 — the new post should appear on the home page
-   and on `/blog`. Click through to make sure the post renders.
+   Open http://localhost:3001 — the new post should appear on the home page and
+   on `/blog`. Click through to make sure the post renders.
 
 5. Open a PR. CI runs lint, typecheck, format check, hadolint, and pre-commit
    hooks (including [Crisp](https://github.com/Weburz/crisp) for commit
@@ -108,9 +109,9 @@ If `task build` succeeds, deploy will succeed.
 
 ## Editing existing pages
 
-Every page has a "View source" / "Edit on GitHub" link in the right rail of
-the docs layout (OSS pages). For blog posts the equivalent is in
-`PageHeaderLinks` — top-right of the post header.
+Every page has a "View source" / "Edit on GitHub" link in the right rail of the
+docs layout (OSS pages). For blog posts the equivalent is in `PageHeaderLinks` —
+top-right of the post header.
 
 You can also fetch any page as raw Markdown:
 
@@ -123,5 +124,5 @@ Useful for piping a page into an AI tool or for off-site quoting.
 
 ## Drafts
 
-There is no `draft: true` convention. The convention is: don't merge a post
-to `main` until it's ready to publish. Use a branch.
+There is no `draft: true` convention. The convention is: don't merge a post to
+`main` until it's ready to publish. Use a branch.

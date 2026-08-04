@@ -1,28 +1,30 @@
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    name: string;
-    size?: "sm" | "md";
-  }>(),
-  { size: "sm" },
-);
+  const MAX_INITIALS = 2;
 
-const initials = computed(() =>
-  props.name
-    .split(/\s+/)
-    .map((s) => s[0] ?? "")
-    .join("")
-    .slice(0, 2)
-    .toUpperCase(),
-);
+  const props = withDefaults(
+    defineProps<{
+      name: string;
+      size?: "sm" | "md";
+    }>(),
+    { size: "sm" },
+  );
 
-const isLarge = computed(() => props.size === "md");
+  const initials = computed(() =>
+    props.name
+      .split(/\s+/u)
+      .map((word) => word[0] ?? "")
+      .join("")
+      .slice(0, MAX_INITIALS)
+      .toUpperCase(),
+  );
+
+  const isLarge = computed(() => props.size === "md");
 </script>
 
 <template>
   <span class="inline-flex items-center gap-2">
     <span
-      class="rounded-full bg-elevated text-default flex items-center justify-center font-semibold ring-1 ring-default"
+      class="bg-elevated text-default ring-default flex items-center justify-center rounded-full font-semibold ring-1"
       :class="isLarge ? 'size-9 text-sm' : 'size-6 text-[11px]'"
     >
       {{ initials }}

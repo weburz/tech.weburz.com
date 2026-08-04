@@ -1,8 +1,8 @@
 <script setup lang="ts">
-defineProps<{
-  items: { label: string; to: string }[];
-  block?: boolean;
-}>();
+  defineProps<{
+    items: { label: string; to: string }[];
+    block?: boolean;
+  }>();
 </script>
 
 <template>

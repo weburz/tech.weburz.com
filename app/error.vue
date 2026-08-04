@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import type { NuxtError } from "#app";
+  import type { NuxtError } from "#app";
 
-defineProps<{
-  error: NuxtError;
-}>();
+  defineProps<{
+    error: NuxtError;
+  }>();
 
-useHead({
-  htmlAttrs: {
-    lang: "en",
-  },
-});
+  useHead({
+    htmlAttrs: {
+      lang: "en",
+    },
+  });
 
-useSeoMeta({
-  title: "Page not found",
-  description: "We are sorry but this page could not be found.",
-});
+  useSeoMeta({
+    description: "We are sorry but this page could not be found.",
+    title: "Page not found",
+  });
 
-const { data: navigation } = await useAsyncData("navigation", () =>
-  queryCollectionNavigation("openSource"),
-);
-const { data: files } = useLazyAsyncData(
-  "search",
-  async () => {
-    const [openSource, blog] = await Promise.all([
-      queryCollectionSearchSections("openSource"),
-      queryCollectionSearchSections("blog"),
-    ]);
-    return [...openSource, ...blog];
-  },
-  {
-    server: false,
-  },
-);
+  const { data: navigation } = await useAsyncData("navigation", () =>
+    queryCollectionNavigation("openSource"),
+  );
+  const { data: files } = useLazyAsyncData(
+    "search",
+    async () => {
+      const [openSource, blog] = await Promise.all([
+        queryCollectionSearchSections("openSource"),
+        queryCollectionSearchSections("blog"),
+      ]);
+      return [...openSource, ...blog];
+    },
+    {
+      server: false,
+    },
+  );
 
-provide("navigation", navigation);
+  provide("navigation", navigation);
 </script>
 
 <template>
@@ -43,7 +43,7 @@ provide("navigation", navigation);
     <UError :error="error" />
 
     <UContainer class="pb-16 sm:pb-20">
-      <figure class="max-w-3xl mx-auto">
+      <figure class="mx-auto max-w-3xl">
         <!--
           This page is served as a client-rendered SPA shell on GitHub Pages,
           so IPX URLs here are never prerendered. The image params must match
@@ -59,9 +59,9 @@ provide("navigation", navigation);
           format="webp"
           quality="75"
           loading="lazy"
-          class="w-full aspect-[10/3] object-cover rounded-lg grayscale opacity-70"
+          class="aspect-[10/3] w-full rounded-lg object-cover opacity-70 grayscale"
         />
-        <figcaption class="mt-3 text-xs text-muted text-center">
+        <figcaption class="text-muted mt-3 text-center text-xs">
           Somewhere in the fog below Vitosha. The page you wanted isn't up here,
           but the navigation above is.
         </figcaption>

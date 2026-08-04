@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const { footer } = useAppConfig();
+  const { footer } = useAppConfig();
 </script>
 
 <template>
   <UFooter>
     <template #left>
-      <div class="flex items-center gap-3 text-sm text-muted">
+      <div class="text-muted flex items-center gap-3 text-sm">
         <UColorModeImage
           light="/weburz-wordmark-light.svg"
           dark="/weburz-wordmark-dark.svg"

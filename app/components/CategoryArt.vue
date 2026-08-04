@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { getCategoryStyle } from "~/utils/categories";
+  import { getCategoryStyle } from "~/utils/categories";
 
-const props = defineProps<{
-  category?: string;
-  cover?: string;
-  alt?: string;
-}>();
+  const props = defineProps<{
+    category?: string;
+    cover?: string;
+    alt?: string;
+  }>();
 
-const style = computed(() => getCategoryStyle(props.category));
-const gradient = computed(
-  () => `linear-gradient(135deg, ${style.value.from}, ${style.value.to})`,
-);
+  const style = computed(() => getCategoryStyle(props.category));
+  const gradient = computed(
+    () => `linear-gradient(135deg, ${style.value.from}, ${style.value.to})`,
+  );
 </script>
 
 <template>
-  <div class="relative w-full aspect-[16/9] overflow-hidden rounded-md isolate">
+  <div class="relative isolate aspect-[16/9] w-full overflow-hidden rounded-md">
     <NuxtImg
       v-if="cover"
       :src="cover"
@@ -40,7 +40,7 @@ const gradient = computed(
       <div class="absolute inset-0 flex items-center justify-center">
         <UIcon
           :name="style.icon"
-          class="size-16 sm:size-20 text-white/85 drop-shadow"
+          class="size-16 text-white/85 drop-shadow sm:size-20"
         />
       </div>
     </template>

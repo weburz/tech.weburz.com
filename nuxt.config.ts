@@ -1,36 +1,5 @@
 export default defineNuxtConfig({
-  modules: [
-    "@nuxt/eslint",
-    "@nuxt/image",
-    "@nuxt/ui",
-    "@nuxt/content",
-    "nuxt-og-image",
-  ],
-
-  devtools: {
-    enabled: true,
-  },
-
-  css: ["~/assets/css/main.css"],
-
-  site: {
-    url: "https://tech.weburz.com",
-    name: "Tech at Weburz",
-  },
-
-  ui: {
-    theme: {
-      colors: [
-        "primary",
-        "secondary",
-        "neutral",
-        "success",
-        "info",
-        "warning",
-        "error",
-      ],
-    },
-  },
+  compatibilityDate: "2026-05-23",
 
   content: {
     build: {
@@ -45,7 +14,29 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: "2026-05-23",
+  css: ["~/assets/css/main.css"],
+
+  devtools: {
+    enabled: true,
+  },
+
+  icon: {
+    provider: "iconify",
+  },
+
+  modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/content", "nuxt-og-image"],
+
+  nitro: {
+    prerender: {
+      autoSubfolderIndex: false,
+      crawlLinks: true,
+      routes: ["/", "/blog", "/open-source", "/careers", "/rss.xml"],
+    },
+  },
+
+  ogImage: {
+    zeroRuntime: true,
+  },
 
   runtimeConfig: {
     public: {
@@ -53,20 +44,23 @@ export default defineNuxtConfig({
     },
   },
 
-  nitro: {
-    prerender: {
-      routes: ["/", "/blog", "/open-source", "/careers", "/rss.xml"],
-      crawlLinks: true,
-      autoSubfolderIndex: false,
+  site: {
+    name: "Tech at Weburz",
+    url: "https://tech.weburz.com",
+  },
+
+  ui: {
+    theme: {
+      colors: [
+        "primary",
+        "secondary",
+        "neutral",
+        "success",
+        "info",
+        "warning",
+        "error",
+      ],
     },
-  },
-
-  icon: {
-    provider: "iconify",
-  },
-
-  ogImage: {
-    zeroRuntime: true,
   },
 
   vite: {
