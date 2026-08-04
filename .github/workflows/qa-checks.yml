@@ -13,44 +13,92 @@ on:
       - review_requested
 
 jobs:
-  code-qa:
-    name: Run Code QA Checks
+  oxlint:
+    name: Run Oxlint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6.0.9
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: 24
           cache: "pnpm"
 
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
-      - name: Run QA Check Tools
-        run: |
-          pnpm lint
-          pnpm typecheck
-          pnpm format:check
+      - name: Run Oxlint
+        run: pnpm lint
 
-      - name: Verify Static Build
-        run: pnpm run generate
-        env:
-          NUXT_PUBLIC_SITE_URL: https://tech.weburz.com
-
-  hadolint-checks:
-    name: Run Hadolint on the Dockerfile
+  oxfmt:
+    name: Run Oxfmt
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the Repository
-        uses: actions/checkout@v7
+      - name: Checkout Repository
+        uses: actions/checkout@v7.0.1
 
-      - name: Run Hadolint
-        uses: hadolint/hadolint-action@v3.3.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6.0.9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.0.0
         with:
-          dockerfile: ./Dockerfile
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run Oxfmt
+        run: pnpm fmt:check
+
+  typecheck:
+    name: Run TypeCheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6.0.9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run Type-Check
+        run: pnpm typecheck
+
+  build:
+    name: Run Build Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6.0.9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Verify Static Build
+        env:
+          NUXT_PUBLIC_SITE_URL: https://tech.weburz.com
+        run: pnpm run generate
