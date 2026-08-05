@@ -1,4 +1,11 @@
-export type CategoryName = "Infrastructure" | "Data" | "People" | "Open Source";
+const CATEGORY_NAMES = [
+  "Data",
+  "Infrastructure",
+  "Open Source",
+  "People",
+] as const;
+
+export type CategoryName = (typeof CATEGORY_NAMES)[number];
 
 export interface CategoryStyle {
   from: string;
@@ -35,7 +42,7 @@ const DEFAULT_STYLE: CategoryStyle = {
   to: "#64748b",
 };
 
-export const ALL_CATEGORIES = Object.keys(CATEGORY_STYLES);
+export const ALL_CATEGORIES = CATEGORY_NAMES;
 
 const isCategoryName = (category: string): category is CategoryName =>
   category in CATEGORY_STYLES;

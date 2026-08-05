@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { formatDate } from "~/utils/format-date";
+
   const props = defineProps<{
     post: {
       path?: string;
@@ -32,10 +34,7 @@
       <div class="flex min-w-0 flex-1 flex-col gap-3">
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="post.category" :category="post.category" />
-          <time
-            v-if="postDate"
-            class="text-muted text-xs"
-          >
+          <time v-if="postDate" class="text-muted text-xs">
             {{ postDate }}
           </time>
         </div>

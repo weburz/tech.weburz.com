@@ -1,6 +1,6 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 
-import { ALL_CATEGORIES } from "./app/utils/categories";
+import { ALL_CATEGORIES } from "./app/utils/category-styles";
 
 const seoSchema = z
   .object({

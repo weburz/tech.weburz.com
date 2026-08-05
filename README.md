@@ -81,7 +81,7 @@ category: Infrastructure
 | `category`    | no       | Drives the chip color + the generated cover art. Must match a known category. |
 | `cover`       | no       | Path to a real image (under `public/`). Overrides the generated tile.         |
 
-Known categories live in `CATEGORY_STYLES` in `app/utils/categories.ts`
+Known categories live in `CATEGORY_NAMES` in `app/utils/category-styles.ts`
 (`Infrastructure`, `Data`, `People`, `Open Source`); edit that map to add one.
 
 The body is standard Markdown; fenced code blocks get syntax highlighting from
