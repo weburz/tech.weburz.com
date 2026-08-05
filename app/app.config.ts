@@ -47,7 +47,7 @@ export default defineAppConfig({
   },
   toc: {
     bottom: {
-      edit: "https://github.com/Weburz/tech.weburz.com/edit/main/content",
+      edit: false,
       links: [],
       title: "Page",
     },
