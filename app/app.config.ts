@@ -42,9 +42,6 @@ export default defineAppConfig({
     title: "tech.weburz",
     to: "/",
   },
-  seo: {
-    siteName: "Tech at Weburz",
-  },
   toc: {
     bottom: {
       edit: false,
