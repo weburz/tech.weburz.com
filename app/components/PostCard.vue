@@ -12,7 +12,7 @@
     featured?: boolean;
   }>();
 
-  const formatted = useFormattedDate(() => props.post.date, "short");
+  const postDate = computed(() => formatDate(props.post.date));
 </script>
 
 <template>
@@ -33,11 +33,10 @@
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="post.category" :category="post.category" />
           <time
-            v-if="formatted"
-            :datetime="formatted.iso"
+            v-if="postDate"
             class="text-muted text-xs"
           >
-            {{ formatted.display }}
+            {{ postDate }}
           </time>
         </div>
 
