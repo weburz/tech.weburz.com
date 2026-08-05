@@ -99,6 +99,4 @@ jobs:
         run: pnpm install
 
       - name: Verify Static Build
-        env:
-          NUXT_PUBLIC_SITE_URL: https://tech.weburz.com
         run: pnpm run generate

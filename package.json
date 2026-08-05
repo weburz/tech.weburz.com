@@ -29,11 +29,12 @@
     "ufo": "^1.6.4"
   },
   "devDependencies": {
+    "nuxtseo-layer-devtools": "^5.3.9",
     "oxfmt": "^0.61.0",
     "oxlint": "^1.76.0",
     "oxlint-tsgolint": "^0.25.0",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.9"
   },
-  "packageManager": "pnpm@11.1.3"
+  "packageManager": "pnpm@11.20.0"
 }
