@@ -48,10 +48,7 @@
       <div class="max-w-3xl">
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="page.category" :category="page.category" />
-          <time
-            v-if="postDate"
-            class="text-muted text-sm"
-          >
+          <time v-if="postDate" class="text-muted text-sm">
             {{ postDate }}
           </time>
         </div>
