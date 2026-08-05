@@ -22,9 +22,12 @@ export default defineNuxtConfig({
   modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/content", "nuxt-og-image"],
   nitro: {
     prerender: {
-      autoSubfolderIndex: false,
+      autoSubfolderIndex: true,
+      concurrency: 1,
       crawlLinks: true,
-      routes: ["/", "/blog", "/open-source", "/careers", "/rss.xml"],
+      failOnError: true,
+      interval: 0,
+      routes: ["/rss.xml"],
     },
   },
   ogImage: {
