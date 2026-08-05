@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { getCategoryStyle } from "~/utils/categories";
+  import { getCategoryStyle } from "~/utils/category-styles";
 
   const props = defineProps<{
     category?: string;
