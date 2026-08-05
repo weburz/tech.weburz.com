@@ -16,9 +16,6 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
-  icon: {
-    provider: "iconify",
-  },
   modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/content", "nuxt-og-image"],
   nitro: {
     prerender: {
