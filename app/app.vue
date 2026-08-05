@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  const { seo } = useAppConfig();
+  const { name } = useSiteConfig();
 
   useSeoMeta({
-    ogSiteName: seo?.siteName,
-    titleTemplate: `%s - ${seo?.siteName}`,
+    ogSiteName: name,
+    titleTemplate: `%s - ${name}`,
     twitterCard: "summary_large_image",
   });
 </script>

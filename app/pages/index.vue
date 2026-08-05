@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { seo } = useAppConfig();
+  const { name } = useSiteConfig();
 
   const { data: posts } = await useAsyncData("home-posts", () =>
     queryCollection("blog").order("date", "DESC").all(),
@@ -16,15 +16,15 @@
       "Engineering writing and open-source projects from the Weburz team.",
     ogDescription:
       "Engineering writing and open-source projects from the Weburz team.",
-    ogTitle: seo?.siteName,
-    title: seo?.siteName,
+    ogTitle: name,
+    title: name,
     titleTemplate: "",
   });
 
   defineOgImage("Docs", {
     description:
       "Engineering writing and open-source projects from the Weburz team.",
-    title: seo?.siteName,
+    title: name,
   });
 </script>
 
