@@ -1,6 +1,5 @@
 export default defineNuxtConfig({
   compatibilityDate: "2026-05-23",
-
   content: {
     build: {
       markdown: {
@@ -13,19 +12,14 @@ export default defineNuxtConfig({
       sqliteConnector: "native",
     },
   },
-
   css: ["~/assets/css/main.css"],
-
   devtools: {
     enabled: true,
   },
-
   icon: {
     provider: "iconify",
   },
-
   modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/content", "nuxt-og-image"],
-
   nitro: {
     prerender: {
       autoSubfolderIndex: false,
@@ -33,22 +27,18 @@ export default defineNuxtConfig({
       routes: ["/", "/blog", "/open-source", "/careers", "/rss.xml"],
     },
   },
-
   ogImage: {
     zeroRuntime: true,
   },
-
   runtimeConfig: {
     public: {
       umamiWebsiteId: "",
     },
   },
-
   site: {
     name: "Tech at Weburz",
     url: "https://tech.weburz.com",
   },
-
   ui: {
     theme: {
       colors: [
@@ -62,7 +52,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   vite: {
     optimizeDeps: {
       include: ["@vueuse/core"],
