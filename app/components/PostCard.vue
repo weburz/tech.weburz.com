@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { formatDate } from "~/utils/format-date";
+
   const props = defineProps<{
     post: {
       path?: string;
@@ -12,7 +14,7 @@
     featured?: boolean;
   }>();
 
-  const formatted = useFormattedDate(() => props.post.date, "short");
+  const postDate = computed(() => formatDate(props.post.date));
 </script>
 
 <template>
@@ -32,12 +34,8 @@
       <div class="flex min-w-0 flex-1 flex-col gap-3">
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="post.category" :category="post.category" />
-          <time
-            v-if="formatted"
-            :datetime="formatted.iso"
-            class="text-muted text-xs"
-          >
-            {{ formatted.display }}
+          <time v-if="postDate" class="text-muted text-xs">
+            {{ postDate }}
           </time>
         </div>
 

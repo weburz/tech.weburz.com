@@ -24,6 +24,13 @@ export default defineNuxtConfig({
         },
         { href: "/site.webmanifest", rel: "manifest" },
       ],
+      script: [
+        {
+          "data-website-id": "",
+          defer: true,
+          src: "https://umami.weburz.com/script.js",
+        },
+      ],
     },
   },
   compatibilityDate: "2026-05-23",
@@ -56,11 +63,6 @@ export default defineNuxtConfig({
   },
   ogImage: {
     zeroRuntime: true,
-  },
-  runtimeConfig: {
-    public: {
-      umamiWebsiteId: "",
-    },
   },
   site: {
     name: "Tech at Weburz",

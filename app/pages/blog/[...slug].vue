@@ -33,7 +33,7 @@
     title,
   });
 
-  const formatted = useFormattedDate(() => page.value?.date, "long");
+  const postDate = computed(() => formatDate(page.value?.date));
 
   defineOgImage("Docs", {
     description,
@@ -48,12 +48,8 @@
       <div class="max-w-3xl">
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="page.category" :category="page.category" />
-          <time
-            v-if="formatted"
-            :datetime="formatted.iso"
-            class="text-muted text-sm"
-          >
-            {{ formatted.display }}
+          <time v-if="postDate" class="text-muted text-sm">
+            {{ postDate }}
           </time>
         </div>
 
