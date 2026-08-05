@@ -5,43 +5,16 @@
     error: NuxtError;
   }>();
 
-  useHead({
-    htmlAttrs: {
-      lang: "en",
-    },
-  });
-
   useSeoMeta({
     description: "We are sorry but this page could not be found.",
     title: "Page not found",
   });
-
-  const { data: navigation } = await useAsyncData("navigation", () =>
-    queryCollectionNavigation("openSource"),
-  );
-  const { data: files } = useLazyAsyncData(
-    "search",
-    async () => {
-      const [openSource, blog] = await Promise.all([
-        queryCollectionSearchSections("openSource"),
-        queryCollectionSearchSections("blog"),
-      ]);
-      return [...openSource, ...blog];
-    },
-    {
-      server: false,
-    },
-  );
-
-  provide("navigation", navigation);
 </script>
 
 <template>
   <UApp>
     <AppHeader />
-
     <UError :error="error" />
-
     <UContainer class="pb-16 sm:pb-20">
       <figure class="mx-auto max-w-3xl">
         <!--
@@ -59,7 +32,7 @@
           format="webp"
           quality="75"
           loading="lazy"
-          class="aspect-[10/3] w-full rounded-lg object-cover opacity-70 grayscale"
+          class="aspect-10/3 w-full rounded-lg object-cover opacity-70 grayscale"
         />
         <figcaption class="text-muted mt-3 text-center text-xs">
           Somewhere in the fog below Vitosha. The page you wanted isn't up here,
@@ -67,11 +40,6 @@
         </figcaption>
       </figure>
     </UContainer>
-
     <AppFooter />
-
-    <ClientOnly>
-      <LazyUContentSearch :files="files" :navigation="navigation" />
-    </ClientOnly>
   </UApp>
 </template>

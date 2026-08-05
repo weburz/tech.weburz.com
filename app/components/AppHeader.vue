@@ -21,7 +21,6 @@
     </template>
 
     <template #right>
-      <UContentSearchButton v-if="header?.search" />
       <UColorModeButton v-if="header?.colorMode" />
       <template v-if="header?.links">
         <UButton
