@@ -1,14 +1,10 @@
 <script setup lang="ts">
-  import type { ContentNavigationItem } from "@nuxt/content";
-  import { findPageHeadline } from "@nuxt/content/utils";
-
   definePageMeta({
     layout: "docs",
   });
 
   const route = useRoute();
   const { toc } = useAppConfig();
-  const navigation = inject<Ref<ContentNavigationItem[] | null>>("navigation");
 
   const { data: page } = await useAsyncData(route.path, () =>
     queryCollection("openSource").path(route.path).first(),
@@ -37,11 +33,7 @@
     title,
   });
 
-  const headline = computed(() =>
-    findPageHeadline(navigation?.value ?? undefined, page.value?.path),
-  );
-
-  defineOgImage("Docs", { description, headline: headline.value, title });
+  defineOgImage("Docs", { description, title });
 </script>
 
 <template>
@@ -55,12 +47,6 @@
           <UIcon :name="page.icon" class="text-default size-6" />
         </div>
         <div class="min-w-0 flex-1">
-          <p
-            v-if="headline"
-            class="text-muted text-xs tracking-wider uppercase"
-          >
-            {{ headline }}
-          </p>
           <h1 class="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">
             {{ page.title }}
           </h1>
