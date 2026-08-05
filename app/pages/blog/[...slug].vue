@@ -77,11 +77,9 @@
       </div>
 
       <div
-        class="border-default mt-8 flex flex-wrap items-center justify-between gap-4 border-t pt-6"
+        class="border-default mt-8 flex flex-wrap items-center gap-4 border-t pt-6"
       >
         <PostAuthor v-if="page.author" :name="page.author" size="md" />
-        <span v-else />
-        <PageHeaderLinks />
       </div>
     </header>
 

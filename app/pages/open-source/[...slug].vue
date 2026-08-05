@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+      <div class="mt-6 flex flex-wrap items-center gap-3">
         <div class="flex flex-wrap items-center gap-2">
           <UButton
             v-for="(link, index) in page.links"
@@ -80,7 +80,6 @@
             v-bind="link"
           />
         </div>
-        <PageHeaderLinks />
       </div>
     </header>
 
