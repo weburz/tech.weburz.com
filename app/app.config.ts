@@ -43,11 +43,6 @@ export default defineAppConfig({
     to: "/",
   },
   toc: {
-    bottom: {
-      edit: "https://github.com/Weburz/tech.weburz.com/edit/main/content",
-      links: [],
-      title: "Page",
-    },
     title: "Table of Contents",
   },
   ui: {
