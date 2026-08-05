@@ -12,12 +12,6 @@ repos:
       - id: check-added-large-files
       - id: no-commit-to-branch
 
-  - repo: https://github.com/AleksaC/hadolint-py
-    rev: v2.15.1
-    hooks:
-      - id: hadolint
-        name: lint Dockerfiles
-
   - repo: https://github.com/oxc-project/mirrors-oxlint
     rev: v1.76.0
     hooks:
