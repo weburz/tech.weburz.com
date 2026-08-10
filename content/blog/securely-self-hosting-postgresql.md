@@ -117,6 +117,97 @@ ready for the next step: installing and bootstrapping PostgreSQL.
 
 ## Installing PostgreSQL on Your Server
 
+With our Azure infrastructure and operating system foundation locked in, it is
+time to get PostgreSQL up and running. At Weburz, we prefer a clean, native
+installation using the official PostgreSQL Global Development Group (PGDG) `apt`
+repository rather than default OS package repositories. This ensures we get the
+latest stable, performance-optimised versions of PostgreSQL directly from the
+maintainers.
+
+Here is th step-by-step process we follow to install PostgreSQL on our Debian
+golden images:
+
+### 1. Import the Official PostgreSQL Repository
+
+First, update your local package list and install the necessary prerequisites to
+securely fetch packages:
+
+```bash
+sudo apt-get update
+sudo apt-get install --assume-yes curl ca-certificates gnupg
+```
+
+Next, import the official PostgreSQL signing key and add the repository to your
+system's sources list:
+
+```bash
+sudo install --directory /etc/apt/keyrings
+curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+  | sudo gpg --dearmor --output /etc/apt/keyrings/postgresql.gpg
+echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" \
+  | sudo tee /etc/apt/sources.list.d/pgdg.list
+```
+
+### 2. Install PostgreSQL
+
+Once the repository is registered, update your package list again and install
+your desired PostgreSQL version (for example, version 19):
+
+```bash
+sudo apt-get update
+sudo apt-get install --assume-yes postgresql-19 postgresql-contrib-19
+```
+
+**TIP**: If you want to future-proof your installation or let the system pull
+the absolute latest stable version automatically, you can substitute
+`postgresql-16` with just `postgresql`.
+
+### 3. Verify the Installation
+
+By default, the installer automatically initializes a default database cluster
+and starts the PostgreSQL service as a `systemd` daemon. You can verify that the
+service is running smoothly with:
+
+```bash
+sudo systemctl status postgresql
+```
+
+You should see an active (`running`) status confirming that your server is
+operational.
+
+### 4. Setting the Default Superuser Password
+
+Out of the box, PostgreSQL creates a default superuser account named `postgres`
+that relies on peer authentication (meaning it authenticates based on your
+system user). To prepare our server for remote application connectivity and
+administrative tasks, we set a secure password for this account.
+
+Switch to the `postgres` system user:
+
+```bash
+sudo -i -u postgres
+```
+
+Access the PostgreSQL interactive terminal (using the `psql` client):
+
+```bash
+psql
+```
+
+Run the following SQL commands to set a strorng password (replace
+`your_secure_password_here` with a robust generated password):
+
+```sql
+ALTER USER postgres PASSWORD 'your_secure_password_here';
+```
+
+Exit the `psql` prompt by typing `\q`, and return to your regular user shell by
+typing `exit`.
+
+With PostgreSQL installed and the primary superuser secured, your are ready for
+the next step: configuring users, databases and establishing secure remote
+connectivity.
+
 ## Initial Configuration and User Management
 
 ## Enabling Remote Access and Network Security
