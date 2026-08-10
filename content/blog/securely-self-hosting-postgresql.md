@@ -40,6 +40,81 @@ server-cutting costs, reclaiming control, and keeping our data secure.
 
 ## Prerequisites and Infrastructure Requirements
 
+Before we dive into the installation commands, we need to lay a solid
+foundation. At Weburz, we learned early on that skipping proper infrastructure
+planning leads to performance bottlenecks later. Because our infrastructure runs
+on Microsoft Azure, setting up our self-hosted PostgreSQL server starts with
+selecting the right Azure Virtual Machine (VM) size, storage tier, and
+configuring Azure networking correctly.
+
+Here is the exact Azure infrastructure blueprint we use to get started:
+
+### 1. Azure VM Sizing and Hardware Considerations
+
+PostgreSQL is notoriously efficient, but its performance heavily depends on your
+underlying hardware-especially memory and disk throughput. When provisioning an
+Azure VM, we recommend:
+
+- Series Selection: Use General Purpose (e.g., Dv5 or Dasv5-series) or Memory
+  Optimized (e.g., Ev5-series) VMs. Memory-optimized instances are fantastic
+  because PostgreSQL relies heavily on caching data in RAM (`shared_buffers`),
+  which directly speeds up query execution.
+
+- vCPUs and RAM: A 2 vCPU / 8 GB RAM instance is a great starting point for
+  standard workloads, but scale this up as your concurrent connections and
+  dataset grow.
+
+### 2. Azure Managed Disks (Storage is Crucial)
+
+Database operations involve frequent random reads and writes, meaning slow disks
+will instantly bottleneck your application.
+
+- Avoid Standard HDDs: Do not use Standard HDD storage for a production
+  database.
+
+- Premium SSDs / Ultra Disks: We strictly use Azure Premium SSDs (or Ultra Disks
+  for heavy I/O workloads) to ensure high IOPS (Input/Output Operations Per
+  Second) and low latency. Enabling Host Caching (Read-only for data disks) can
+  also significantly improve read performance.
+
+### 3. Operating System Choice
+
+For consistency, stability, and long-term support, we standardize on Debian
+Stable. [Debian](https://www.debian.org) provides rock-solid reliability, and
+its package managers (`apt`) make installing and patching PostgreSQL seamless.
+
+To maintain strict environment consistency across our infrastructure at Weburz,
+we use [HashiCorp Packer](https://developer.hashicorp.com/packer) to build
+standardized "golden images" running on Debian. This ensures every database
+instance we spin up is pre-configured identically, drastically reducing
+configuration drift.
+
+**NOTE**: Because diving deep into Packer requires a guide of its own, we will
+be covering our automated image-building pipeline in detail in an upcoming blog
+post!
+
+### 4. Azure Networking and Security Integration
+
+At Weburz, we never expose our database server directly to the public internet.
+Instead, we lock down our network architecture within Azure:
+
+- Virtual Network (VNet) & Subnets: Deploy your PostgreSQL VM within a private
+  subnet inside an Azure VNet, keeping it entirely isolated from external
+  inbound traffic.
+
+- Network Security Groups (NSGs): Configure your NSG rules to block all inbound
+  traffic by default, only allowing explicitly trusted internal IPs or
+  application subnets.
+
+- Tailscale Integration: To connect our distributed application servers securely
+  to this private Azure VM without complex VPN gateways or peering overhead, we
+  install Tailscale. This routes all database traffic through an encrypted,
+  zero-trust tunnel, ensuring absolute privacy whether our apps are running in
+  other Azure regions, AWS, or on-premise.
+
+With your Azure VM provisioned, storage optimized, and network secured, you are
+ready for the next step: installing and bootstrapping PostgreSQL.
+
 ## Installing PostgreSQL on Your Server
 
 ## Initial Configuration and User Management
