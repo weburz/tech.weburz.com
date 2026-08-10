@@ -210,6 +210,88 @@ connectivity.
 
 ## Initial Configuration and User Management
 
+Now that PostgreSQL is up and running on your Azure VM, the next step is moving
+away from the default administrative setup. At Weburz, we follow the principle
+of least privilege-meaning we avoid using the master `postgres` superuser for
+day-to-day application connections. Instead, we create dedicated databases and
+restricted users tailored to each application.
+
+Here is how we handle initial configuration and user management:
+
+### 1. Accessing the PostgreSQL Prompt
+
+To create databases and users, you first need to access the database management
+interface. Switch back to the system `postgres` user and launch the interactive
+terminal:
+
+```bash
+sudo -i -u postgres psql
+```
+
+### 2. Creating a Dedicated Database
+
+Instead of cluttering the default `postgres` database, create a dedicated
+database for your project. Run the following SQL command (replace `lorem` with
+your actual project name):
+
+```sql
+CREATE DATABASE weburz_prod;
+```
+
+### 3. Creating a Dedicated User and Assigning Privileges
+
+Next, create a non-superuser account for your application. This limits potential
+security risks if your application credentials are ever compromised.
+
+Run the following commands to create a user and grant them full ownership and
+privileges over your new database:
+
+```sql
+CREATE USER john_doe WITH ENCRYPTED PASSWORD 'your_strong_app_password';
+GRANT ALL PRIVILEGES ON DATABASE lorem TO john_doe;
+```
+
+If you are using PostgreSQL 15 or newer, permission structures have been
+tightened. You should also grant privileges on the default `public` schema
+within your database so the application can create tables:
+
+```sql
+\c lorem
+GRANT ALL ON SCHEMA public TO lorem;
+```
+
+Type `\q` to exit the `psql` shell, and exit to return to your normal user
+account.
+
+### 4. Tuning Basic Resource Configurations
+
+Before opening your database up to the network, it is a good idea to adjust a
+few basic settings in the main configuration file, `postgresql.conf`. This file
+is typically located at `/etc/postgresql/<VERSION>/main/postgresql.conf`
+(depending on your version).
+
+Open the configuration file with your preferred text editor:
+
+```console
+sudo vim /etc/postgresql/<VERSION>/main/postgresql.conf
+```
+
+Look for the following core parameters to tweak for baseline performance:
+
+- `max_connections`: Default is usually 100. If you have many microservices or
+  serverless functions connecting, you might need to adjust this, but keep it
+  balanced to prevent exhausting your RAM.
+
+- `shared_buffers`: As a rule of thumb for dedicated database servers, set this
+  to roughly 25% of your Azure VM's total RAM to optimize caching.
+
+Save and close the file, then restart PostgreSQL to apply your configuration
+changes:
+
+```bash
+sudo systemctl restart postgresql
+```
+
 ## Enabling Remote Access and Network Security
 
 ## Hardening Security and User Authentication
