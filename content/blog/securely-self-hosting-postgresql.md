@@ -8,7 +8,7 @@ description:
 date: 2026-08-10 10:04:03.664634+00:00
 author: Somraj Saha
 category: Infrastructure
-cover: /blog/vitosha.webp
+cover: /blog/self-hosting-postgresql.webp
 ---
 
 At [Weburz](https://weburz.com), we've felt the pinch that many growing tech
@@ -294,6 +294,257 @@ sudo systemctl restart postgresql
 
 ## Enabling Remote Access and Network Security
 
+By default, PostgreSQL is locked down to accept connections only from
+`localhost`. This is great for security out of the box, but at some point, your
+backend application servers-living on different nodes or cloud environments-need
+to talk to the database.
+
+At Weburz, we enable remote access without compromising our perimeter security
+by combining PostgreSQL's native configuration files with our Tailscale
+zero-trust network.
+
+Here is how we configure safe, encrypted remote access:
+
+### 1. Update `listen_addresses` in `postgresql.conf`
+
+First, we need to tell PostgreSQL to listen for incoming connections beyond just
+the local machine.
+
+Open your configuration file:
+
+```console
+sudo vim /etc/postgresql/<VERSION>/main/postgresql.conf
+```
+
+Find the line that controls `listen_addresses`. By default, it is commented out
+or set to `localhost`. Change it to listen on all interfaces (`*`) or
+specifically on your server's internal Tailscale IP address:
+
+```conf
+listen_addresses = '*'
+```
+
+**NOTE**: Setting this to `*` is safe only because we will strictly restrict who
+can connect using the firewall and authentication files next.
+
+Save and close the file.
+
+### 2. Configure Client Authentication in `pg_hba.conf`
+
+PostgreSQL uses the `pg_hba.conf` (Host-Based Authentication) file to control
+which clients are allowed to connect, to which databases, and using what
+authentication methods.
+
+```console
+sudo vim /etc/postgresql/<VERSION>/main/pg_hba.conf
+```
+
+Scroll to the bottom of the file where IPv4 and IPv6 connections are defined.
+Instead of allowing connections from anywhere, we want to explicitly whitelist
+our application servers or our secure Tailscale IP range (Tailscale typically
+uses the `100.64.0.0/10` CGNAT block).
+
+Add a rule like this:
+
+```text
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    lorem           john_doe        100.64.0.0/10           scram-sha-256
+```
+
+- `host`: Specifies a network TCP/IP connection.
+- `lorem`: The specific database name.
+- `john_doe`: The specific application user.
+- `100.64.0.0/10`: The Tailscale secure subnet (you can also specify exact
+  individual server IP addresses here for tighter security).
+- `scram-sha-256`: The modern, secure password-hashing standard used by current
+  PostgreSQL versions.
+
+Save and close the file.
+
+### 3. Enforce Azure Network Security Groups (NSGs)
+
+Because our database VM lives in Azure, defense-in-depth is critical. Even
+though PostgreSQL is now configured to accept connections via Tailscale, we
+ensure that Azure Network Security Groups (NSGs) block standard public inbound
+traffic on port `5432`.
+
+- Ensure there are no inbound rules allowing port `5432` from `Any` or
+  `Internet`.
+
+- If your application and database are both part of the same Azure Virtual
+  Network (VNet) or connected via Tailscale, internal routing handles the
+  handshake safely without ever opening ports to the public internet.
+
+### 4. Apply Changes
+
+Restart PostgreSQL to load your new network and authentication rules:
+
+```bash
+sudo systemctl restart postgresql
+```
+
+With remote access securely established over your private mesh network, your
+database is ready for production traffic. Next, let's look at how we harden
+security further and manage routine maintenance.
+
 ## Hardening Security and User Authentication
 
+Getting your remote connection up and running is a major milestone, but at
+Weburz, we treat network-level isolation as only the first line of defense. A
+truly production-ready database requires deep-layer security hardening to
+protect your data against unauthorized access, credential leaks, and
+interception.
+
+Here is how we lock down our self-hosted PostgreSQL instances:
+
+### 1. Enforcing Strong Password Policies and SCRAM-SHA-256
+
+Older versions of PostgreSQL defaulted to the legacy `md5` password-hashing
+algorithm, which is susceptible to brute-force attacks if intercepted. Modern
+versions default to SCRAM-SHA-256, a much stronger challenge-response
+authentication mechanism.
+
+To ensure all database users utilize this robust standard, verify your
+`password_encryption` setting inside your `postgresql.conf` file:
+
+```text
+password_encryption  = scram-sha-256
+```
+
+Whenever you create new database users or rotate existing passwords, PostgreSQL
+will automatically hash them securely using SCRAM.
+
+### 2. Implementing the Principle of Least Privilege
+
+We touched on this during user setup, but it bears repeating as a core hardening
+practice: **never let your application connect as the superuser (`postgres`)**.
+
+- Restrict your application user (`john_doe`) so it only has permissions on the
+  specific schemas and tables it needs.
+
+- Revoke public schema access from unprivileged users if they don't need to
+  create objects there:
+
+```sql
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+```
+
+- Regularly audit your user roles and permissions using `psql` commands like
+  `\du` to ensure no lingering test accounts or overly permissive roles exist in
+  production.
+
+### 3. Encrypting Data in Transit with SSL/TLS
+
+Even though our traffic travels securely over our Tailscale mesh network,
+defense-in-depth dictates that all data moving between your application and the
+database should be encrypted.
+
+PostgreSQL supports native SSL/TLS connections out of the box. To enforce
+encrypted connections:
+
+1. Open your `postgresql.conf` file:
+
+   ```console
+   sudo vim /etc/postgresql/<VERSION>/main/postgresql.conf
+   ```
+
+2. Locate and enable the SSL parameter:
+
+   ```text
+   ssl = on
+   ```
+
+3. Point PostgreSQL to your SSL certificate and private key files (you can
+   generate self-signed certificates for internal use or provision them via
+   Let's Encrypt/internal CA):
+
+   ```text
+   ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+   ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
+   ```
+
+To strictly force all clients to use encrypted connections, update your
+`pg_hba.conf` file, replacing `host` with `hostssl` for your connection rules:
+
+```text
+hostssl lorem john_doe 100.64.0.0/10 scram-sha-256
+```
+
+Save your changes and restart PostgreSQL one final time to enforce SSL:
+
+```bash
+sudo systemctl restart postgresql
+```
+
+With your database fully hardened against threats, secure authentication
+enforced, and encrypted channels established, your server is safe and ready. In
+our final section, we will look at how we automate backups and monitor
+performance to keep things running smoothly.
+
 ## Setting Up Automated Backups and Monitoring
+
+Even the most secure and well-optimized database server is vulnerable to the
+unexpected-whether it is human error (like an accidental `DROP TABLE` in
+production), hardware failure, or silent data corruption. At Weburz, we operate
+under a simple rule: **if it isn't backed up automatically, it doesn't exist**.
+
+Here is how we set up a robust backup and monitoring routine for our self-hosted
+PostgreSQL instances:
+
+### 1. Automated Logical Backups with `pg_dump`
+
+For routine, lightweight backups, PostgreSQL provides the built-in utility
+`pg_dump`. We use a simple shell script combined with `systemd` timers to export
+our databases daily.
+
+A basic backup command looks like this:
+
+```bash
+pg_dump -U postgres -d lorem -F c -b -v -f /var/backups/postgresql/lorem_prod_$(date +%F).dump
+```
+
+- `-F c`: Outputs a custom archive format, which is compressed and allows
+  flexible restoration using `pg_restore`.
+
+- `-b`: Includes large objects in the dump.
+
+### 2. Secure Offsite Storage with Restic
+
+Local backups stored on the same Azure VM won't save you if the entire disk or
+region suffers a catastrophic failure. To protect against this, we push our
+encrypted database dumps to secure offsite cloud storage.
+
+While a deep dive into our disaster recovery pipeline is coming in a future
+dedicated blog post, we rely heavily on [Restic](https://restic.net)-a fast,
+secure, and incredibly efficient backup program-to handle deduplicated,
+encrypted offsite snapshots of our backup directories. It keeps our historical
+backups safe without ballooning our storage costs.
+
+### 3. Monitoring Database Performance and Health
+
+You cannot manage what you do not measure. To keep an eye on CPU usage, memory
+pressure, disk I/O, and active connections on our Azure VM, we implement
+lightweight monitoring tools:
+
+- Node Exporter & Prometheus / Grafana: To track system-level metrics and
+  visualize trends over time.
+
+- PostgreSQL Activity Queries: For quick health checks, you can always jump into
+  `psql` and check active queries to spot performance bottlenecks or locked
+  tables:
+
+  ```sql
+  SELECT pid, usename, query, state, age(clock_timestamp(), query_start) AS duration
+  FROM pg_stat_activity
+  WHERE state != 'idle';
+  ```
+
+## Conclusion
+
+Self-hosting your own PostgreSQL database server doesn't have to be a leap into
+the unknown. By combining the right Azure infrastructure, a secure zero-trust
+network like Tailscale, and automated maintenance workflows, you can cut down on
+expensive cloud bills while retaining absolute control over your company's data.
+
+At Weburz, making this switch has given us both peace of mind and financial
+freedom-and with this guide, you have the exact blueprint to do it yourself!
