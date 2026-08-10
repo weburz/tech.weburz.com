@@ -1,6 +1,8 @@
 ---
 title: "@weburz/particle-canvas"
-description: Zero-dependency animated particle canvas for Nuxt 4 — drop-in <ParticleCanvas /> component, ~10 KB.
+description:
+  Zero-dependency animated particle canvas for Nuxt 4 — drop-in <ParticleCanvas
+  /> component, ~10 KB.
 icon: i-simple-icons-nuxt
 tags:
   - Nuxt
@@ -25,9 +27,9 @@ runtime dependencies, ~10 KB unminified (~3 KB gzipped), TypeScript-first.
 
 ## Why it exists
 
-Every marketing site we build ends up wanting a particle-y hero background.
-We wanted something small, Nuxt-native, and SSR-safe — so we wrote one,
-optimized for the way we ship sites.
+Every marketing site we build ends up wanting a particle-y hero background. We
+wanted something small, Nuxt-native, and SSR-safe — so we wrote one, optimized
+for the way we ship sites.
 
 - Auto-imported `<ParticleCanvas />` component
 - Zero runtime dependencies
@@ -79,14 +81,14 @@ Drop the component anywhere — it auto-imports:
 </template>
 
 <style scoped>
-.hero {
-  position: relative;
-  height: 100vh;
-}
-.hero > :first-child {
-  position: absolute;
-  inset: 0;
-}
+  .hero {
+    position: relative;
+    height: 100vh;
+  }
+  .hero > :first-child {
+    position: absolute;
+    inset: 0;
+  }
 </style>
 ```
 
@@ -105,4 +107,5 @@ Full `ParticleConfig` reference lives in the repo README — see below.
 
 ## Source
 
-[github.com/Weburz/particle-canvas](https://github.com/Weburz/particle-canvas) — MIT licensed.
+[github.com/Weburz/particle-canvas](https://github.com/Weburz/particle-canvas) —
+MIT licensed.
