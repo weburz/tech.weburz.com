@@ -1,6 +1,8 @@
 ---
 title: "@weburz/carousel"
-description: Drop-in carousels for Nuxt 4 that make YouTube, Instagram, and TikTok embeds behave. Embla-powered.
+description:
+  Drop-in carousels for Nuxt 4 that make YouTube, Instagram, and TikTok embeds
+  behave. Embla-powered.
 icon: i-simple-icons-nuxt
 tags:
   - Nuxt
@@ -32,8 +34,8 @@ until you whisper the right postMessage handshake, and TikTok's `embed.js`
 sleeps through SPA navigations. This module ships all the workarounds so you
 don't have to earn them the hard way.
 
-- `<BaseCarousel>` / `<BaseSlide>` — Embla underneath: arrows, dots,
-  multi-slide views, zero jank
+- `<BaseCarousel>` / `<BaseSlide>` — Embla underneath: arrows, dots, multi-slide
+  views, zero jank
 - `<YouTubeCarousel>` — videos & Shorts; autoplays when scrolled into view,
   mutes/pauses when scrolled away
 - `<InstagramCarousel>` — direct iframes that content blockers can't kill, no
@@ -78,8 +80,8 @@ Vue file.
 </template>
 ```
 
-Instagram and TikTok expose no playback control API from outside the iframe,
-so "pause" is implemented by unloading the iframe (`src → about:blank`) and
+Instagram and TikTok expose no playback control API from outside the iframe, so
+"pause" is implemented by unloading the iframe (`src → about:blank`) and
 restoring it on return — the embed reloads, but audio never keeps playing
 off-screen.
 
@@ -88,5 +90,4 @@ the repo README.
 
 ## Source
 
-[github.com/Weburz/carousel](https://github.com/Weburz/carousel) — MIT
-licensed.
+[github.com/Weburz/carousel](https://github.com/Weburz/carousel) — MIT licensed.

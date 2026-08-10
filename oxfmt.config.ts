@@ -6,9 +6,6 @@ export default defineConfig({
     ".nuxt",
     ".output",
     ".task",
-    // Nuxt Content MDC syntax (e.g. ::u-page-hero{...}) is not understood
-    // by generic Markdown formatters and gets corrupted on reformat.
-    "content",
     "dist",
     "node_modules",
     "pnpm-lock.yaml",
