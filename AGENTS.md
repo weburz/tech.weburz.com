@@ -12,14 +12,14 @@ README covers layout and content frontmatter in depth — read it before editing
   `--check` → `pre-commit run --all-files`. Fix all of these before pushing.
 - Lint/format are Oxlint + Oxfmt (no ESLint/Prettier). `sort-imports` is off,
   but `oxfmt` **sorts imports** — run `task format` after adding imports.
-- `task build` fails on any prerender error (`nitro.prerender.failOnError`),
-  and it's the exact artifact GitHub Pages deploys. If it succeeds, deploy
-  succeeds.
+- `task build` fails on any prerender error (`nitro.prerender.failOnError`), and
+  it's the exact artifact GitHub Pages deploys. If it succeeds, deploy succeeds.
 
 ## Content (most edits land here)
 
-- Blog posts: `content/blog/<slug>.md`; OSS pages: `content/open-source/<name>.md`.
-  Filename = slug. Frontmatter shape is Zod-validated in `content.config.ts`.
+- Blog posts: `content/blog/<slug>.md`; OSS pages:
+  `content/open-source/<name>.md`. Filename = slug. Frontmatter shape is
+  Zod-validated in `content.config.ts`.
 - `category` must be one of `CATEGORY_NAMES` in `app/utils/category-styles.ts`
   (`Data`, `Infrastructure`, `People`, `Open Source`) or content fails to load.
   Edit that map (and `ALL_CATEGORIES` usage) to add a category.
@@ -30,11 +30,12 @@ README covers layout and content frontmatter in depth — read it before editing
 
 ## Code conventions
 
-- `tsconfig.json` extends the generated `.nuxt/tsconfig.json` — run `pnpm
-  install` (postinstall runs `nuxt prepare`) before typechecking fresh clones.
+- `tsconfig.json` extends the generated `.nuxt/tsconfig.json` — run
+  `pnpm install` (postinstall runs `nuxt prepare`) before typechecking fresh
+  clones.
 - Nuxt auto-imports are registered as Oxlint globals (ref, computed,
-  `queryCollection`, …): `app/composables/**`, `app/utils/**` use named
-  exports; `app/plugins/**` and `server/**` handlers use default exports.
+  `queryCollection`, …): `app/composables/**`, `app/utils/**` use named exports;
+  `app/plugins/**` and `server/**` handlers use default exports.
 - Type-aware Oxlint rules are disabled for `server/**` (tsgolint can't resolve
   Nitro's tsconfig) — `nuxt typecheck` is the authority for those files.
 - New shared components: PascalCase filename, max 3 props, no destructured
