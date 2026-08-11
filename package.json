@@ -22,11 +22,9 @@
     "@nuxt/ui": "^4.10.0",
     "@takumi-rs/core": "^2.5.4",
     "@vueuse/core": "^14.4.0",
-    "minimark": "^1.0.0",
     "nuxt": "^4.5.1",
     "nuxt-og-image": "^6.7.5",
-    "tailwindcss": "^4.3.3",
-    "ufo": "^1.6.4"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "nuxtseo-layer-devtools": "^5.3.9",
@@ -36,5 +34,5 @@
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.9"
   },
-  "packageManager": "pnpm@11.20.0"
+  "packageManager": "pnpm@11.21.0"
 }

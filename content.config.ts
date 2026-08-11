@@ -11,6 +11,20 @@ const seoSchema = z
 
 export default defineContentConfig({
   collections: {
+    authors: defineCollection({
+      schema: z.object({
+        avatar: z.string().optional(),
+        bio: z.string().optional(),
+        github: z.string().optional(),
+        name: z.string(),
+        role: z.string(),
+        website: z.string().optional(),
+      }),
+      source: {
+        include: "authors/**/*.yml",
+      },
+      type: "data",
+    }),
     blog: defineCollection({
       schema: z.object({
         author: z.string().optional(),

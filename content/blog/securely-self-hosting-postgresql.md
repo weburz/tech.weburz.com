@@ -6,7 +6,7 @@ description:
   database. Discover how to configure, secure, and manage production-ready
   instances efficiently.
 date: 2026-08-10 10:04:03.664634+00:00
-author: Somraj Saha
+author: somraj-saha
 category: Infrastructure
 cover: /blog/self-hosting-postgresql.webp
 ---
