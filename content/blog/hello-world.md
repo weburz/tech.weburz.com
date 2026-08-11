@@ -4,7 +4,7 @@ description:
   Kicking off the Weburz engineering blog — what to expect, and why we're
   publishing in the open.
 date: 2026-05-22
-author: Weburz Engineering
+author: sagar-kapoor
 category: People
 cover: /blog/vitosha.webp
 ---
