@@ -1,7 +1,8 @@
 <script setup lang="ts">
+  import { useAuthor } from "~/composables/useAuthor";
   import { formatDate } from "~/utils/format-date";
 
-  const props = defineProps<{
+  interface Props {
     post: {
       path?: string;
       title?: string;
@@ -12,9 +13,14 @@
       cover?: string;
     };
     featured?: boolean;
-  }>();
+  }
+
+  const props = defineProps<Props>();
+
+  const { getAuthor } = useAuthor();
 
   const postDate = computed(() => formatDate(props.post.date));
+  const author = computed(() => getAuthor(props.post.author));
 </script>
 
 <template>
@@ -56,7 +62,7 @@
           {{ post.description }}
         </p>
 
-        <PostAuthor v-if="post.author" :name="post.author" />
+        <PostAuthor v-if="author" :author="author" />
       </div>
     </div>
   </NuxtLink>

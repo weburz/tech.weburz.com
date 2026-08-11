@@ -1,4 +1,9 @@
 <script setup lang="ts">
+  import { useAuthor } from "~/composables/useAuthor";
+  import { formatDate } from "~/utils/format-date";
+
+  const { getAuthor } = useAuthor();
+
   definePageMeta({
     layout: "blog",
   });
@@ -34,6 +39,8 @@
   });
 
   const postDate = computed(() => formatDate(page.value?.date));
+
+  const author = computed(() => getAuthor(page.value?.author));
 
   defineOgImage("Docs", {
     description,
@@ -75,7 +82,7 @@
       <div
         class="border-default mt-8 flex flex-wrap items-center gap-4 border-t pt-6"
       >
-        <PostAuthor v-if="page.author" :name="page.author" size="md" />
+        <PostAuthor v-if="author" :author="author" />
       </div>
     </header>
 

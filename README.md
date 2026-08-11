@@ -33,7 +33,6 @@ content/                 # Markdown content (see "Adding content" below)
 server/
   routes/
     rss.xml.get.ts       # /rss.xml — built from the blog collection
-    raw/[...slug].md...  # /raw/<path>.md — markdown source of any content page
 public/                  # Static assets served verbatim
 content.config.ts        # Nuxt Content collections (blog + docs)
 nuxt.config.ts           # Modules, prerender, OG image, site URL
@@ -123,10 +122,7 @@ the repo's own README for full reference.
 ### Editing and drafts
 
 Every content page has "View source" / "Edit on GitHub" links (right rail on
-docs pages, top-right of the post header on blog posts), and any page is
-available as raw Markdown at `/raw/<path>.md` — e.g.
-`https://tech.weburz.com/raw/blog/hello-world.md` — useful for piping into an AI
-tool or off-site quoting.
+docs pages, top-right of the post header on blog posts).
 
 There is no `draft: true` convention: don't merge a post to `main` until it's
 ready to publish. Use a branch.
