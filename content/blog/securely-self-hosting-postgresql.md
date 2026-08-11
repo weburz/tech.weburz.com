@@ -43,9 +43,9 @@ server-cutting costs, reclaiming control, and keeping our data secure.
 Before we dive into the installation commands, we need to lay a solid
 foundation. At Weburz, we learned early on that skipping proper infrastructure
 planning leads to performance bottlenecks later. Because our infrastructure runs
-on Microsoft Azure, setting up our self-hosted PostgreSQL server starts with
-selecting the right Azure Virtual Machine (VM) size, storage tier, and
-configuring Azure networking correctly.
+on [Microsoft Azure](https://azure.microsoft.com), setting up our self-hosted
+PostgreSQL server starts with selecting the right Azure Virtual Machine (VM)
+size, storage tier, and configuring Azure networking correctly.
 
 Here is the exact Azure infrastructure blueprint we use to get started:
 
@@ -110,7 +110,8 @@ Instead, we lock down our network architecture within Azure:
   to this private Azure VM without complex VPN gateways or peering overhead, we
   install Tailscale. This routes all database traffic through an encrypted,
   zero-trust tunnel, ensuring absolute privacy whether our apps are running in
-  other Azure regions, AWS, or on-premise.
+  other Azure regions, AWS, or on-premise. For further security, we only allow a
+  select group of IT Admins with access to the database servers using the VPN.
 
 With your Azure VM provisioned, storage optimized, and network secured, you are
 ready for the next step: installing and bootstrapping PostgreSQL.
@@ -129,6 +130,14 @@ golden images:
 
 ### 1. Import the Official PostgreSQL Repository
 
+**NOTE**: On Debian, and especially in automated environments where user
+interactivity is non-existent, we also add this variable at the top of the
+script:
+
+```bash
+export DEBIAN_FRONTEND=noninteractive
+```
+
 First, update your local package list and install the necessary prerequisites to
 securely fetch packages:
 
@@ -142,7 +151,7 @@ system's sources list:
 
 ```bash
 sudo install --directory /etc/apt/keyrings
-curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+curl --fail --silent --show-error --location https://www.postgresql.org/media/keys/ACCC4CF8.asc \
   | sudo gpg --dearmor --output /etc/apt/keyrings/postgresql.gpg
 echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" \
   | sudo tee /etc/apt/sources.list.d/pgdg.list
@@ -173,7 +182,34 @@ sudo systemctl status postgresql
 ```
 
 You should see an active (`running`) status confirming that your server is
-operational.
+operational like this:
+
+```console
+● postgresql.service - PostgreSQL database server
+  Loaded: loaded (/lib/systemd/system/postgresql.service; enabled)
+  Active: active (running) since Thu 2024-06-20 10:15:42 UTC; 2h 5min ago
+Main PID: 1234 (postgres)
+  Tasks: 8
+  Memory: 15.2M
+  CGroup: /system.slice/postgresql.service
+        ├─1234 /usr/lib/postgresql/19/bin/postgres -D /var/lib/postgresql/19/main
+        ├─1235 postgres: checkpointer process
+        ├─1236 postgres: writer process
+        └─
+```
+
+Or you can run this command:
+
+```console
+pg_isready
+```
+
+The command will output this message if the database is ready to accept
+connections:
+
+```console
+/var/run/postgresql:5432 - accepting connections
+```
 
 ### 4. Setting the Default Superuser Password
 
@@ -182,16 +218,10 @@ that relies on peer authentication (meaning it authenticates based on your
 system user). To prepare our server for remote application connectivity and
 administrative tasks, we set a secure password for this account.
 
-Switch to the `postgres` system user:
-
-```bash
-sudo -i -u postgres
-```
-
 Access the PostgreSQL interactive terminal (using the `psql` client):
 
 ```bash
-psql
+sudo --login --user postgres psql
 ```
 
 Run the following SQL commands to set a strorng password (replace
@@ -201,10 +231,10 @@ Run the following SQL commands to set a strorng password (replace
 ALTER USER postgres PASSWORD 'your_secure_password_here';
 ```
 
-Exit the `psql` prompt by typing `\q`, and return to your regular user shell by
-typing `exit`.
+Exit the `psql` prompt by typing `\q`, and you will be returned to your regular
+interactive shell.
 
-With PostgreSQL installed and the primary superuser secured, your are ready for
+With PostgreSQL installed and the primary superuser secured, you are ready for
 the next step: configuring users, databases and establishing secure remote
 connectivity.
 
@@ -225,7 +255,7 @@ interface. Switch back to the system `postgres` user and launch the interactive
 terminal:
 
 ```bash
-sudo -i -u postgres psql
+sudo --login --user postgres psql
 ```
 
 ### 2. Creating a Dedicated Database
@@ -235,7 +265,7 @@ database for your project. Run the following SQL command (replace `lorem` with
 your actual project name):
 
 ```sql
-CREATE DATABASE weburz_prod;
+CREATE DATABASE lorem;
 ```
 
 ### 3. Creating a Dedicated User and Assigning Privileges
@@ -251,9 +281,9 @@ CREATE USER john_doe WITH ENCRYPTED PASSWORD 'your_strong_app_password';
 GRANT ALL PRIVILEGES ON DATABASE lorem TO john_doe;
 ```
 
-If you are using PostgreSQL 15 or newer, permission structures have been
-tightened. You should also grant privileges on the default `public` schema
-within your database so the application can create tables:
+PostgreSQL 15+ adds stricter permission structures so you should also grant
+privileges on the default `public` schema within your database for the
+application to create tables:
 
 ```sql
 \c lorem
@@ -266,14 +296,36 @@ account.
 ### 4. Tuning Basic Resource Configurations
 
 Before opening your database up to the network, it is a good idea to adjust a
-few basic settings in the main configuration file, `postgresql.conf`. This file
-is typically located at `/etc/postgresql/<VERSION>/main/postgresql.conf`
-(depending on your version).
+few basic settings in the database configuration file, `postgresql.conf`. By
+default, the main configuration file is typically located at
+`/etc/postgresql/<VERSION>/main/postgresql.conf` (depending on your version of
+the database and Operating System).
 
-Open the configuration file with your preferred text editor:
+At Weburz, we do not recommend configuring this main file for two main reasons:
+
+1. It can potentially be overwritten by software updates.
+2. In case of a catastrophic misconfiguration, we can always fallback to the
+   default settings without worrying about data loss.
+
+Instead our recommendations is to create a
+`/etc/postgresql/<VERSION>/main/conf.d` directory and add the user-defined
+configurations in there.
 
 ```console
-sudo vim /etc/postgresql/<VERSION>/main/postgresql.conf
+/etc/postgresql/<VERSION>/main/conf.d/00shared.conf
+/etc/postgresql/<VERSION>/main/conf.d/01memory.conf
+/etc/postgresql/<VERSION>/main/conf.d/02server.conf
+```
+
+**TIP**: Make sure to provide legible and unambiguous file names to avoid
+confusion and perhaps even version-control the configurations, if possible.
+
+The default configurations the database server ships with is a good source of
+reference for customisation. You can view it and you will the majority of it is
+commented out with additional reference documentation:
+
+```console
+sudo less /etc/postgresql/<VERSION>/main/postgresql.conf
 ```
 
 Look for the following core parameters to tweak for baseline performance:
@@ -300,34 +352,44 @@ backend application servers-living on different nodes or cloud environments-need
 to talk to the database.
 
 At Weburz, we enable remote access without compromising our perimeter security
-by combining PostgreSQL's native configuration files with our Tailscale
-zero-trust network.
+by combining PostgreSQL's native configuration files, Azure Network Security
+Group (NSG) rules and with our Tailscale zero-trust network. We obviously cannot
+share the details of our security protocols but we plan on writing a reference
+article on the topic some time in the near future.
 
-Here is how we configure safe, encrypted remote access:
+Regardless, here is how you can configure a safe, encrypted remote access
+configuration for the database as a first line of defence:
 
-### 1. Update `listen_addresses` in `postgresql.conf`
+### 1. Update the `listen_addresses` setting
 
 First, we need to tell PostgreSQL to listen for incoming connections beyond just
 the local machine.
 
-Open your configuration file:
+Open or create a new user-defined configuration file:
 
 ```console
-sudo vim /etc/postgresql/<VERSION>/main/postgresql.conf
+sudo vim /etc/postgresql/<VERSION>/main/conf.d/00-networking.conf
 ```
 
-Find the line that controls `listen_addresses`. By default, it is commented out
-or set to `localhost`. Change it to listen on all interfaces (`*`) or
-specifically on your server's internal Tailscale IP address:
+Add the following line to the file:
 
 ```conf
 listen_addresses = '*'
 ```
 
-**NOTE**: Setting this to `*` is safe only because we will strictly restrict who
-can connect using the firewall and authentication files next.
+**NOTE**: As a source of reference, find the line that controls
+`listen_addresses` in the main configuration file
+(`/etc/postgresql/<VERSION>/main/postgresql.conf`), by default, it is commented
+out or set to `localhost`. Change it to listen on all interfaces (`*`) or
+specifically on your server's internal Tailscale IP address:
 
-Save and close the file.
+```conf
+list_address = "100.64.123.123"
+```
+
+**NOTE**: Setting this to `*` is safe only if there are strict firewall
+protection and the users properly using the authentication tokens we will
+discuss next.
 
 ### 2. Configure Client Authentication in `pg_hba.conf`
 
@@ -339,10 +401,10 @@ authentication methods.
 sudo vim /etc/postgresql/<VERSION>/main/pg_hba.conf
 ```
 
-Scroll to the bottom of the file where IPv4 and IPv6 connections are defined.
-Instead of allowing connections from anywhere, we want to explicitly whitelist
-our application servers or our secure Tailscale IP range (Tailscale typically
-uses the `100.64.0.0/10` CGNAT block).
+Scroll to the bottom of the file where IPv4 and IPv6 connections are already
+defined by default. Instead of allowing connections from anywhere, we want to
+explicitly whitelist our application servers or our secure Tailscale IP range
+(Tailscale typically uses the `100.64.0.0/10` CGNAT block).
 
 Add a rule like this:
 
@@ -359,7 +421,14 @@ host    lorem           john_doe        100.64.0.0/10           scram-sha-256
 - `scram-sha-256`: The modern, secure password-hashing standard used by current
   PostgreSQL versions.
 
-Save and close the file.
+**TIP**: At Weburz, we automate our database schema migration process in a CI/CD
+environment. For that we also assign a specific user (e.g., `migration_user`)
+and fine-tune it's permissions by following the principles of least-privileges.
+We then configure the `pg_hba.conf` file to allow the `migration_user` to only
+make network requests from the CI/CD server it is running on.
+
+When you are done configuring the authentication settings, save and close the
+file.
 
 ### 3. Enforce Azure Network Security Groups (NSGs)
 
@@ -442,13 +511,13 @@ database should be encrypted.
 PostgreSQL supports native SSL/TLS connections out of the box. To enforce
 encrypted connections:
 
-1. Open your `postgresql.conf` file:
+1. Open the configuration file:
 
    ```console
-   sudo vim /etc/postgresql/<VERSION>/main/postgresql.conf
+   sudo vim /etc/postgresql/<VERSION>/main/conf.d/00-networking.conf
    ```
 
-2. Locate and enable the SSL parameter:
+2. Add the following line to enable the SSL parameter:
 
    ```text
    ssl = on
@@ -463,18 +532,30 @@ encrypted connections:
    ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
    ```
 
-To strictly force all clients to use encrypted connections, update your
-`pg_hba.conf` file, replacing `host` with `hostssl` for your connection rules:
+   To generate your own SSL certificate for the PostgreSQL server and client,
+   you can run the following commands:
 
-```text
-hostssl lorem john_doe 100.64.0.0/10 scram-sha-256
-```
+   ```bash
+   openssl req -new -x509 -days 365 -nodes -out server.crt -keyout server.key
+   ```
 
-Save your changes and restart PostgreSQL one final time to enforce SSL:
+   You will be prompted with a few questions about the certificate and after
+   answering them you will receive your self-signed certificates.
 
-```bash
-sudo systemctl restart postgresql
-```
+4. To strictly force all clients to use encrypted connections, update your
+   `pg_hba.conf` file, replacing `host` with `hostssl` for your connection
+   rules:
+
+   ```text
+   # TYPE    DATABASE        USER            ADDRESS                 METHOD
+   hostssl   lorem           john_doe        100.64.0.0/10           scram-sha-256
+   ```
+
+5. Save your changes and restart PostgreSQL one final time to enforce SSL:
+
+   ```bash
+   sudo systemctl restart postgresql
+   ```
 
 With your database fully hardened against threats, secure authentication
 enforced, and encrypted channels established, your server is safe and ready. In
@@ -500,13 +581,14 @@ our databases daily.
 A basic backup command looks like this:
 
 ```bash
-pg_dump -U postgres -d lorem -F c -b -v -f /var/backups/postgresql/lorem_prod_$(date +%F).dump
+pg_dump --username=postgres --dbname=lorem \
+  --format=custom --large-objects --verbose \
+  --file=/var/backups/postgresql/lorem_prod_$(date +%F).dump
 ```
 
-- `-F c`: Outputs a custom archive format, which is compressed and allows
-  flexible restoration using `pg_restore`.
-
-- `-b`: Includes large objects in the dump.
+- The `--format=custom` option produces a custom archive format, which is
+  compressed and allows flexible restoration using `pg_restore`.
+- The `--large-objects` option includes large objects in the dump.
 
 ### 2. Secure Offsite Storage with Restic
 
@@ -515,8 +597,8 @@ region suffers a catastrophic failure. To protect against this, we push our
 encrypted database dumps to secure offsite cloud storage.
 
 While a deep dive into our disaster recovery pipeline is coming in a future
-dedicated blog post, we rely heavily on [Restic](https://restic.net)-a fast,
-secure, and incredibly efficient backup program-to handle deduplicated,
+dedicated blog post, we rely heavily on [Restic](https://restic.net). It is a
+fast, secure, and incredibly efficient backup program-to handle deduplicated,
 encrypted offsite snapshots of our backup directories. It keeps our historical
 backups safe without ballooning our storage costs.
 
@@ -526,8 +608,12 @@ You cannot manage what you do not measure. To keep an eye on CPU usage, memory
 pressure, disk I/O, and active connections on our Azure VM, we implement
 lightweight monitoring tools:
 
-- Node Exporter & Prometheus / Grafana: To track system-level metrics and
-  visualize trends over time.
+- [Node Exporter](https://github.com/prometheus/node_exporter) &
+  [Prometheus](https://prometheus.io) / [Grafana](https://grafana.com): To track
+  system-level metrics and visualize trends over time.
+
+- [Azure Monitor](https://azure.microsoft.com/en-us/products/monitor) to provide
+  us with general resource consumption feedback and cost alerts.
 
 - PostgreSQL Activity Queries: For quick health checks, you can always jump into
   `psql` and check active queries to spot performance bottlenecks or locked
