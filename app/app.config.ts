@@ -39,9 +39,6 @@ export default defineAppConfig({
     ],
     title: "tech.weburz",
   },
-  toc: {
-    title: "Table of Contents",
-  },
   ui: {
     colors: {
       primary: "burzyellow",
