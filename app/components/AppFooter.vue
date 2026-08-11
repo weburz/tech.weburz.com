@@ -1,5 +1,26 @@
 <script setup lang="ts">
-  const { footer } = useAppConfig();
+  const credits = `© ${new Date().getFullYear()} Weburz`;
+
+  const links = [
+    {
+      "aria-label": "RSS feed",
+      external: true,
+      icon: "i-lucide-rss",
+      to: "/rss.xml",
+    },
+    {
+      "aria-label": "Weburz on GitHub",
+      icon: "i-simple-icons-github",
+      target: "_blank",
+      to: "https://github.com/Weburz",
+    },
+    {
+      "aria-label": "weburz.com",
+      icon: "i-lucide-globe",
+      target: "_blank",
+      to: "https://weburz.com",
+    },
+  ];
 </script>
 
 <template>
@@ -13,13 +34,13 @@
           class="h-4 w-auto opacity-80"
         />
         <span class="text-default/40">·</span>
-        <span>{{ footer.credits }}</span>
+        <span>{{ credits }}</span>
       </div>
     </template>
 
     <template #right>
       <UButton
-        v-for="(link, index) of footer?.links"
+        v-for="(link, index) of links"
         :key="index"
         v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
       />
