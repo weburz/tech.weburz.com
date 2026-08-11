@@ -1,6 +1,5 @@
 export default defineAppConfig({
   footer: {
-    colorMode: false,
     credits: `© ${new Date().getFullYear()} Weburz`,
     links: [
       {
@@ -38,26 +37,19 @@ export default defineAppConfig({
       { label: "Open Source", to: "/open-source" },
       { label: "Careers", to: "/careers" },
     ],
-    search: true,
     title: "tech.weburz",
-    to: "/",
   },
   toc: {
     title: "Table of Contents",
   },
   ui: {
     colors: {
-      error: "red",
-      info: "blue",
-      neutral: "slate",
       primary: "burzyellow",
       secondary: "burzblue",
-      success: "green",
       warning: "amber",
     },
     footer: {
       slots: {
-        left: "text-sm text-muted",
         root: "border-t border-default",
       },
     },

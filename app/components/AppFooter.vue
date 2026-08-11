@@ -18,8 +18,6 @@
     </template>
 
     <template #right>
-      <UColorModeButton v-if="footer?.colorMode" />
-
       <UButton
         v-for="(link, index) of footer?.links"
         :key="index"

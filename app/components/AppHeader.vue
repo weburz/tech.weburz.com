@@ -3,26 +3,21 @@
 </script>
 
 <template>
-  <UHeader
-    :ui="{ center: 'hidden lg:flex lg:flex-1 lg:justify-center gap-1' }"
-    :to="header?.to || '/'"
-  >
+  <UHeader :ui="{ center: 'hidden lg:flex lg:flex-1 lg:justify-center gap-1' }">
     <template #title>
       <span class="flex items-center gap-2">
         <AppLogo class="h-6 w-auto shrink-0" />
-        <span v-if="header?.title" class="text-default font-semibold">
-          {{ header.title }}
-        </span>
+        <span class="text-default font-semibold">{{ header.title }}</span>
       </span>
     </template>
 
-    <template v-if="header?.nav?.length" #default>
+    <template #default>
       <AppHeaderNav :items="header.nav" />
     </template>
 
     <template #right>
       <UColorModeButton v-if="header?.colorMode" />
-      <template v-if="header?.links">
+      <template>
         <UButton
           v-for="(link, index) of header.links"
           :key="index"
@@ -33,7 +28,7 @@
 
     <template #body>
       <nav class="flex flex-col gap-1">
-        <AppHeaderNav :items="header?.nav || []" block />
+        <AppHeaderNav :items="header.nav" block />
       </nav>
     </template>
   </UHeader>
