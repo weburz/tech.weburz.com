@@ -36,6 +36,7 @@ export default defineConfig({
     definePageMeta: "readonly",
     defineProps: "readonly",
     eventHandler: "readonly",
+    formatDate: "readonly",
     getRouterParams: "readonly",
     inject: "readonly",
     navigateTo: "readonly",
@@ -50,7 +51,6 @@ export default defineConfig({
     toValue: "readonly",
     useAppConfig: "readonly",
     useAsyncData: "readonly",
-    useFormattedDate: "readonly",
     useHead: "readonly",
     useLazyAsyncData: "readonly",
     useRoute: "readonly",
@@ -59,7 +59,6 @@ export default defineConfig({
     useSeoMeta: "readonly",
     useSiteConfig: "readonly",
     useToast: "readonly",
-    useTocBottomLinks: "readonly",
     watchEffect: "readonly",
   },
   ignorePatterns: [
