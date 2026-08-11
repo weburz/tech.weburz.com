@@ -30,13 +30,11 @@
 
     <template #right>
       <UColorModeButton />
-      <template>
-        <UButton
-          v-for="(link, index) of links"
-          :key="index"
-          v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
-        />
-      </template>
+      <UButton
+        v-for="(link, index) of links"
+        :key="index"
+        v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
+      />
     </template>
 
     <template #body>

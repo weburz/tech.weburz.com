@@ -62,7 +62,7 @@
           {{ post.description }}
         </p>
 
-        <PostAuthor v-if="author" :author="author" />
+        <PostAuthor v-if="author" :author="author" :link-github="false" />
       </div>
     </div>
   </NuxtLink>
