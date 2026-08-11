@@ -1,5 +1,18 @@
 <script setup lang="ts">
-  const { header } = useAppConfig();
+  const links = [
+    {
+      "aria-label": "tech.weburz.com on GitHub",
+      icon: "i-simple-icons-github",
+      target: "_blank",
+      to: "https://github.com/Weburz/tech.weburz.com",
+    },
+  ];
+
+  const nav = [
+    { label: "Blog", to: "/blog" },
+    { label: "Open Source", to: "/open-source" },
+    { label: "Careers", to: "/careers" },
+  ];
 </script>
 
 <template>
@@ -7,19 +20,19 @@
     <template #title>
       <span class="flex items-center gap-2">
         <AppLogo class="h-6 w-auto shrink-0" />
-        <span class="text-default font-semibold">{{ header.title }}</span>
+        <span class="text-default font-semibold">tech.weburz</span>
       </span>
     </template>
 
     <template #default>
-      <AppHeaderNav :items="header.nav" />
+      <AppHeaderNav :items="nav" />
     </template>
 
     <template #right>
-      <UColorModeButton v-if="header?.colorMode" />
+      <UColorModeButton />
       <template>
         <UButton
-          v-for="(link, index) of header.links"
+          v-for="(link, index) of links"
           :key="index"
           v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
         />
@@ -28,7 +41,7 @@
 
     <template #body>
       <nav class="flex flex-col gap-1">
-        <AppHeaderNav :items="header.nav" block />
+        <AppHeaderNav :items="nav" block />
       </nav>
     </template>
   </UHeader>
