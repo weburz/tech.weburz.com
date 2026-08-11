@@ -4,7 +4,6 @@
   });
 
   const route = useRoute();
-  const { toc } = useAppConfig();
 
   const { data: page } = await useAsyncData(route.path, () =>
     queryCollection("openSource").path(route.path).first(),
@@ -78,7 +77,7 @@
     </UPageBody>
 
     <template v-if="page?.body?.toc?.links?.length" #right>
-      <UContentToc :title="toc?.title" :links="page.body?.toc?.links" />
+      <UContentToc title="Table of Contents" :links="page.body?.toc?.links" />
     </template>
   </UPage>
 </template>
