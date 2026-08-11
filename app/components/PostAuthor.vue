@@ -16,10 +16,17 @@
       role: string;
       avatar?: string;
     };
+    /**
+     * @description Whether the GitHub handle renders as a link. Set to `false` when the
+     * block sits inside another anchor (e.g. a `PostCard`), since nesting an
+     * `<a>` within an `<a>` is invalid HTML — the browser splits the outer
+     * anchor while parsing, which breaks hydration.
+     */
+    linkGithub?: boolean;
   }
 
   // The props for the PostAuthor component.
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), { linkGithub: true });
 
   // Initial state for the author profile fetching logic
   const imgFailed = ref(false);
@@ -89,17 +96,25 @@
       <span class="text-muted text-xs">
         {{ author.role }}
       </span>
-      <a
+      <component
+        :is="linkGithub ? 'a' : 'span'"
         v-if="githubUrl"
-        :href="githubUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-muted hover:text-default inline-flex items-center gap-1 text-xs"
-        :aria-label="`${props.author.name} on GitHub`"
+        v-bind="
+          linkGithub
+            ? {
+                'aria-label': `${props.author.name} on GitHub`,
+                href: githubUrl,
+                rel: 'noopener noreferrer',
+                target: '_blank',
+              }
+            : {}
+        "
+        class="text-muted inline-flex items-center gap-1 text-xs"
+        :class="linkGithub ? 'hover:text-default' : ''"
       >
         <UIcon name="i-simple-icons-github" class="size-4" />
         @{{ author.github }}
-      </a>
+      </component>
     </span>
   </span>
 </template>
