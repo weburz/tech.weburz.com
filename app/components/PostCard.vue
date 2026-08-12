@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { computed } from "vue";
+
   import { useAuthor } from "~/composables/useAuthor";
   import { formatDate } from "~/utils/format-date";
 

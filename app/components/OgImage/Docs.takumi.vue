@@ -1,4 +1,8 @@
 <script setup lang="ts">
+  import { computed } from "vue";
+
+  import { useSiteConfig } from "#imports";
+
   defineOptions({
     inheritAttrs: false,
   });

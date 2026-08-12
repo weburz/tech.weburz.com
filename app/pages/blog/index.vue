@@ -1,4 +1,11 @@
 <script setup lang="ts">
+  import {
+    defineOgImage,
+    queryCollection,
+    useAsyncData,
+    useSeoMeta,
+  } from "#imports";
+
   const { data: posts } = await useAsyncData("blog-index", () =>
     queryCollection("blog").order("date", "DESC").all(),
   );

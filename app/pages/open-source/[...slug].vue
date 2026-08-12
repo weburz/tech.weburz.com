@@ -1,4 +1,15 @@
 <script setup lang="ts">
+  import {
+    createError,
+    defineOgImage,
+    definePageMeta,
+    queryCollection,
+    queryCollectionItemSurroundings,
+    useAsyncData,
+    useRoute,
+    useSeoMeta,
+  } from "#imports";
+
   definePageMeta({
     layout: "docs",
   });

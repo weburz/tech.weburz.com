@@ -1,4 +1,5 @@
 import { queryCollection } from "@nuxt/content/server";
+import { eventHandler, setHeader } from "h3";
 
 import { getSiteConfig } from "#site-config/server/composables";
 

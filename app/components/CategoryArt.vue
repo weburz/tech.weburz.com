@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { computed } from "vue";
+
   import { getCategoryStyle } from "~/utils/category-styles";
 
   const props = defineProps<{
