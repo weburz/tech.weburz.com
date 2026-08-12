@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { defineOgImage, useSeoMeta } from "#imports";
+
   useSeoMeta({
     description:
       "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",

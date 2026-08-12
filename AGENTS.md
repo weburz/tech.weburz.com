@@ -33,9 +33,20 @@ README covers layout and content frontmatter in depth — read it before editing
 - `tsconfig.json` extends the generated `.nuxt/tsconfig.json` — run
   `pnpm install` (postinstall runs `nuxt prepare`) before typechecking fresh
   clones.
-- Nuxt auto-imports are registered as Oxlint globals (ref, computed,
-  `queryCollection`, …): `app/composables/**`, `app/utils/**` use named exports;
-  `app/plugins/**` and `server/**` handlers use default exports.
+- **Never rely on Nuxt auto-imports** — Oxlint keeps no `globals` allowlist, so
+  an unimported composable fails `no-undef`. Import everything explicitly:
+  - Vue APIs (`ref`, `computed`) → `vue`
+  - Nuxt/module APIs (`useAsyncData`, `queryCollection`, `useSeoMeta`,
+    `defineOgImage`, `definePageMeta`, …) → `#imports`
+  - h3 utilities in `server/**` (`eventHandler`, `setHeader`, …) → `h3`, **not**
+    `#imports`. `nuxt typecheck` resolves `#imports` in server files against the
+    app project, where those names don't exist.
+  - `defineNuxtConfig` → `nuxt/config`; local helpers → `~/composables/*`,
+    `~/utils/*`
+  - SFC compiler macros (`defineProps`, `defineOptions`, `withDefaults`) need no
+    import — Oxlint's `vue` env already knows them.
+- `app/composables/**`, `app/utils/**` use named exports; `app/plugins/**` and
+  `server/**` handlers use default exports.
 - Type-aware Oxlint rules are disabled for `server/**` (tsgolint can't resolve
   Nitro's tsconfig) — `nuxt typecheck` is the authority for those files.
 - New shared components: PascalCase filename, max 3 props, no destructured

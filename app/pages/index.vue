@@ -1,4 +1,14 @@
 <script setup lang="ts">
+  import { computed } from "vue";
+
+  import {
+    defineOgImage,
+    queryCollection,
+    useAsyncData,
+    useSeoMeta,
+    useSiteConfig,
+  } from "#imports";
+
   const { name } = useSiteConfig();
 
   const { data: posts } = await useAsyncData("home-posts", () =>

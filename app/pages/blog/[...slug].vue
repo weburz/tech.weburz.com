@@ -1,4 +1,16 @@
 <script setup lang="ts">
+  import { computed } from "vue";
+
+  import {
+    createError,
+    defineOgImage,
+    definePageMeta,
+    queryCollection,
+    queryCollectionItemSurroundings,
+    useAsyncData,
+    useRoute,
+    useSeoMeta,
+  } from "#imports";
   import { useAuthor } from "~/composables/useAuthor";
   import { formatDate } from "~/utils/format-date";
 

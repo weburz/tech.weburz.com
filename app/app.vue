@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { useSeoMeta, useSiteConfig } from "#imports";
+
   const { name } = useSiteConfig();
 
   useSeoMeta({

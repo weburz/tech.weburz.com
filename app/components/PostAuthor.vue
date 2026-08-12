@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { computed, ref } from "vue";
+
   const MAX_INITIALS = 2;
 
   /**

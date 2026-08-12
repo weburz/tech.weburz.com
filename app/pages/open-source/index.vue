@@ -1,4 +1,11 @@
 <script setup lang="ts">
+  import {
+    defineOgImage,
+    queryCollection,
+    useAsyncData,
+    useSeoMeta,
+  } from "#imports";
+
   const { data: projects } = await useAsyncData("open-source-index", () =>
     queryCollection("openSource").order("title", "ASC").all(),
   );
