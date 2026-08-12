@@ -17,10 +17,6 @@ export default defineConfig({
     // Code that is likely to be wrong or useless
     suspicious: "warn",
   },
-  // `vue` covers the SFC compiler macros (defineProps, withDefaults, …). There
-  // is deliberately no `globals` allowlist for Nuxt auto-imports — every
-  // composable and util is imported explicitly at its call site, so `no-undef`
-  // catches a missing import instead of the allowlist hiding it.
   env: {
     amd: true,
     browser: true,
