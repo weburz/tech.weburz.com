@@ -19,11 +19,9 @@
 
 <template>
   <div
-    class="relative flex h-full w-full overflow-hidden bg-neutral-950"
+    class="flex h-full w-full overflow-hidden bg-neutral-950"
     data-theme="dark"
   >
-    <div class="bg-primary-400 absolute top-0 left-0 h-full w-1.5" />
-
     <div class="flex flex-1 flex-col justify-between px-20 py-16">
       <div />
 
