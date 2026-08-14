@@ -26,13 +26,6 @@
       <div />
 
       <div class="flex flex-col gap-5">
-        <!--
-          Named palette, not the `primary` alias. Nuxt UI resolves `primary`
-          through runtime CSS variables driven by app.config.ts, which the OG
-          renderer never applies — `text-primary-400` there falls back to Nuxt
-          UI's default green. `burzyellow-400` is a static @theme value, so it
-          survives into the generated PNG.
-        -->
         <span v-if="headline" class="text-burzyellow-400 text-2xl font-medium">
           {{ headline }}
         </span>
