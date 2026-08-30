@@ -49,6 +49,8 @@ export default defineConfig({
       files: ["*.config.ts"],
       rules: {
         "import/no-default-export": "allow",
+        // Config files execute in Node at build time, not in the browser.
+        "import/no-nodejs-modules": "allow",
         "node/no-top-level-await": "allow",
         "typescript/strict-boolean-expressions": "allow",
         // Zod schemas are call chains by design; the nesting cap would
@@ -154,7 +156,11 @@ export default defineConfig({
     "node/no-process-env": [
       "warn",
       {
-        allowedVariables: ["CI", "GITHUB_ACTIONS"],
+        allowedVariables: [
+          "CI",
+          "GITHUB_ACTIONS",
+          "NUXT_PUBLIC_UMAMI_WEBSITE_ID",
+        ],
       },
     ],
     "oxc/no-async-await": "allow",
