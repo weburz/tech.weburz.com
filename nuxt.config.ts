@@ -1,4 +1,8 @@
+import process from "node:process";
+
 import { defineNuxtConfig } from "nuxt/config";
+
+const umamiWebsiteId = process.env.NUXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export default defineNuxtConfig({
   app: {
@@ -26,13 +30,15 @@ export default defineNuxtConfig({
         },
         { href: "/site.webmanifest", rel: "manifest" },
       ],
-      script: [
-        {
-          "data-website-id": "",
-          defer: true,
-          src: "https://umami.weburz.com/script.js",
-        },
-      ],
+      script: umamiWebsiteId
+        ? [
+            {
+              "data-website-id": umamiWebsiteId,
+              defer: true,
+              src: "https://umami.weburz.com/script.js",
+            },
+          ]
+        : [],
     },
   },
   compatibilityDate: "2026-05-23",
