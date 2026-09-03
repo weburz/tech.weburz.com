@@ -1,7 +1,35 @@
-# tech.weburz.com
+<p align="center">
+  <a href="https://tech.weburz.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/weburz-wordmark-dark.svg">
+      <img alt="Weburz" src="public/weburz-wordmark-light.svg" width="220">
+    </picture>
+  </a>
+</p>
 
-The Weburz engineering site — long-form notes, open-source project docs, and a
-Careers page where the answer is "send us a link to something you built."
+<h1 align="center">tech.weburz.com</h1>
+
+<p align="center">
+  The Weburz engineering site — long-form notes, open-source project docs, and
+  a Careers page where the answer is "send us a link to something you built."
+</p>
+
+<p align="center">
+  <a href="https://github.com/weburz/tech.weburz.com/actions/workflows/deploy.yml"><img alt="Deploy Site" src="https://github.com/weburz/tech.weburz.com/actions/workflows/deploy.yml/badge.svg"></a>
+  <a href="https://github.com/weburz/tech.weburz.com/actions/workflows/qa-checks.yml"><img alt="Code QA Checks" src="https://github.com/weburz/tech.weburz.com/actions/workflows/qa-checks.yml/badge.svg"></a>
+  <a href="https://tech.weburz.com"><img alt="Website status" src="https://img.shields.io/website?url=https%3A%2F%2Ftech.weburz.com&label=tech.weburz.com"></a>
+  <a href="https://tech.weburz.com/rss.xml"><img alt="RSS feed" src="https://img.shields.io/badge/RSS-feed-F26522?logo=rss&logoColor=white"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/weburz/tech.weburz.com"></a>
+</p>
+
+<p align="center">
+  <a href="https://nuxt.com"><img alt="Nuxt 4" src="https://img.shields.io/badge/Nuxt-4-00DC82?logo=nuxt&logoColor=white"></a>
+  <a href="https://ui.nuxt.com"><img alt="Nuxt UI 4" src="https://img.shields.io/badge/Nuxt_UI-4-00DC82?logo=nuxt&logoColor=white"></a>
+  <a href="https://content.nuxt.com"><img alt="Nuxt Content 3" src="https://img.shields.io/badge/Nuxt_Content-3-00DC82?logo=nuxt&logoColor=white"></a>
+  <a href="https://tailwindcss.com"><img alt="Tailwind CSS 4" src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white"></a>
+  <a href="https://oxc.rs"><img alt="Oxlint and Oxfmt" src="https://img.shields.io/badge/Oxlint_%2B_Oxfmt-oxc.rs-6E4AFF"></a>
+  <a href="https://pnpm.io"><img alt="pnpm 11" src="https://img.shields.io/badge/pnpm-11-F69220?logo=pnpm&logoColor=white"></a>
+</p>
 
 Live at [tech.weburz.com](https://tech.weburz.com). Built with [Nuxt 4], [Nuxt
 UI v4], and [Nuxt Content]; deployed as a static site to GitHub Pages.
