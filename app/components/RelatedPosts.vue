@@ -1,15 +1,18 @@
 <script setup lang="ts">
   import { computed } from "vue";
 
+  /** @description A blog post the list links to. */
+  interface Post {
+    path: string;
+    title: string;
+  }
+
   /**
    * @description Lists other blog posts the reader might want to check out next, as a titled
    * link list for the aside of a post.
    */
   interface Props {
-    posts: {
-      path: string;
-      title: string;
-    }[];
+    posts: Post[];
   }
 
   const props = defineProps<Props>();
