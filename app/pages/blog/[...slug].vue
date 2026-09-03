@@ -3,16 +3,15 @@
 
   import {
     createError,
-    defineOgImage,
     definePageMeta,
+    formatDate,
     queryCollection,
     queryCollectionItemSurroundings,
     useAsyncData,
+    useAuthor,
+    usePageSeo,
     useRoute,
-    useSeoMeta,
   } from "#imports";
-  import { useAuthor } from "~/composables/useAuthor";
-  import { formatDate } from "~/utils/format-date";
 
   const { getAuthor } = useAuthor();
 
@@ -42,22 +41,15 @@
   const title = page.value.seo?.title || page.value.title;
   const description = page.value.seo?.description || page.value.description;
 
-  useSeoMeta({
+  usePageSeo({
     description,
-    ogDescription: description,
-    ogTitle: title,
+    headline: page.value.category || undefined,
     title,
   });
 
   const postDate = computed(() => formatDate(page.value?.date));
 
   const author = computed(() => getAuthor(page.value?.author));
-
-  defineOgImage("Docs", {
-    description,
-    headline: page.value.category || undefined,
-    title,
-  });
 </script>
 
 <template>

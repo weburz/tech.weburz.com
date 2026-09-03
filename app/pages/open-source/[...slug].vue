@@ -1,13 +1,12 @@
 <script setup lang="ts">
   import {
     createError,
-    defineOgImage,
     definePageMeta,
     queryCollection,
     queryCollectionItemSurroundings,
     useAsyncData,
+    usePageSeo,
     useRoute,
-    useSeoMeta,
   } from "#imports";
 
   definePageMeta({
@@ -36,14 +35,10 @@
   const title = page.value.seo?.title || page.value.title;
   const description = page.value.seo?.description || page.value.description;
 
-  useSeoMeta({
+  usePageSeo({
     description,
-    ogDescription: description,
-    ogTitle: title,
     title,
   });
-
-  defineOgImage("Docs", { description, title });
 </script>
 
 <template>

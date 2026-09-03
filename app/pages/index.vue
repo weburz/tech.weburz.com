@@ -2,10 +2,9 @@
   import { computed } from "vue";
 
   import {
-    defineOgImage,
     queryCollection,
     useAsyncData,
-    useSeoMeta,
+    usePageSeo,
     useSiteConfig,
   } from "#imports";
 
@@ -21,20 +20,11 @@
   const featured = computed(() => posts.value?.[0]);
   const rest = computed(() => posts.value?.slice(1) ?? []);
 
-  useSeoMeta({
+  usePageSeo({
     description:
       "Engineering writing and open-source projects from the Weburz team.",
-    ogDescription:
-      "Engineering writing and open-source projects from the Weburz team.",
-    ogTitle: name,
     title: name,
     titleTemplate: "",
-  });
-
-  defineOgImage("Docs", {
-    description:
-      "Engineering writing and open-source projects from the Weburz team.",
-    title: name,
   });
 </script>
 

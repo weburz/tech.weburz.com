@@ -41,8 +41,10 @@ README covers layout and content frontmatter in depth — read it before editing
   - h3 utilities in `server/**` (`eventHandler`, `setHeader`, …) → `h3`, **not**
     `#imports`. `nuxt typecheck` resolves `#imports` in server files against the
     app project, where those names don't exist.
-  - `defineNuxtConfig` → `nuxt/config`; local helpers → `~/composables/*`,
-    `~/utils/*`
+  - `defineNuxtConfig` → `nuxt/config`
+  - Local composables and utils (`useAuthor`, `formatDate`, …) are auto-imported
+    too, so they also come from `#imports`, not `~/composables/*` or
+    `~/utils/*`.
   - SFC compiler macros (`defineProps`, `defineOptions`, `withDefaults`) need no
     import — Oxlint's `vue` env already knows them.
 - `app/composables/**`, `app/utils/**` use named exports; `app/plugins/**` and
