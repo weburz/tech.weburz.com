@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { queryCollection, useAsyncData } from "#imports";
-  import { usePageSeo } from "~/composables/usePageSeo";
+  import { queryCollection, useAsyncData, usePageSeo } from "#imports";
 
   const { data: posts } = await useAsyncData("blog-index", () =>
     queryCollection("blog").order("date", "DESC").all(),

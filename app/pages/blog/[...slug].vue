@@ -4,19 +4,19 @@
   import {
     createError,
     definePageMeta,
+    formatDate,
     queryCollection,
     queryCollectionItemSurroundings,
     useAsyncData,
+    useAuthor,
+    usePageSeo,
     useRoute,
   } from "#imports";
-  import { useAuthor } from "~/composables/useAuthor";
-  import { usePageSeo } from "~/composables/usePageSeo";
-  import { formatDate } from "~/utils/format-date";
 
   const { getAuthor } = useAuthor();
 
   definePageMeta({
-    layout: "docs",
+    layout: "blog",
   });
 
   const route = useRoute();

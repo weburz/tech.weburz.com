@@ -5,9 +5,9 @@
     queryCollection,
     queryCollectionItemSurroundings,
     useAsyncData,
+    usePageSeo,
     useRoute,
   } from "#imports";
-  import { usePageSeo } from "~/composables/usePageSeo";
 
   definePageMeta({
     layout: "docs",

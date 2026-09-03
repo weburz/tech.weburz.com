@@ -1,8 +1,12 @@
 <script setup lang="ts">
   import { computed } from "vue";
 
-  import { queryCollection, useAsyncData, useSiteConfig } from "#imports";
-  import { usePageSeo } from "~/composables/usePageSeo";
+  import {
+    queryCollection,
+    useAsyncData,
+    usePageSeo,
+    useSiteConfig,
+  } from "#imports";
 
   const { name } = useSiteConfig();
 

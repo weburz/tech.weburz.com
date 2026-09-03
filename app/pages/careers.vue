@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { usePageSeo } from "~/composables/usePageSeo";
+  import { usePageSeo } from "#imports";
 
   usePageSeo({
     description:
