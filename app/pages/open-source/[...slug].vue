@@ -1,14 +1,13 @@
 <script setup lang="ts">
   import {
     createError,
-    defineOgImage,
     definePageMeta,
     queryCollection,
     queryCollectionItemSurroundings,
     useAsyncData,
     useRoute,
-    useSeoMeta,
   } from "#imports";
+  import { usePageSeo } from "~/composables/usePageSeo";
 
   definePageMeta({
     layout: "docs",
@@ -36,14 +35,10 @@
   const title = page.value.seo?.title || page.value.title;
   const description = page.value.seo?.description || page.value.description;
 
-  useSeoMeta({
+  usePageSeo({
     description,
-    ogDescription: description,
-    ogTitle: title,
     title,
   });
-
-  defineOgImage("Docs", { description, title });
 </script>
 
 <template>

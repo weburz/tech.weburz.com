@@ -1,16 +1,7 @@
 <script setup lang="ts">
-  import { defineOgImage, useSeoMeta } from "#imports";
+  import { usePageSeo } from "~/composables/usePageSeo";
 
-  useSeoMeta({
-    description:
-      "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
-    ogDescription:
-      "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
-    ogTitle: "Careers",
-    title: "Careers",
-  });
-
-  defineOgImage("Docs", {
+  usePageSeo({
     description:
       "We're not hiring right now. The inbox is open if you'd like to be on our radar for next time.",
     title: "Careers",

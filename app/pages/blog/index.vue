@@ -1,23 +1,12 @@
 <script setup lang="ts">
-  import {
-    defineOgImage,
-    queryCollection,
-    useAsyncData,
-    useSeoMeta,
-  } from "#imports";
+  import { queryCollection, useAsyncData } from "#imports";
+  import { usePageSeo } from "~/composables/usePageSeo";
 
   const { data: posts } = await useAsyncData("blog-index", () =>
     queryCollection("blog").order("date", "DESC").all(),
   );
 
-  useSeoMeta({
-    description: "Engineering write-ups from the Weburz team.",
-    ogDescription: "Engineering write-ups from the Weburz team.",
-    ogTitle: "Blog",
-    title: "Blog",
-  });
-
-  defineOgImage("Docs", {
+  usePageSeo({
     description: "Engineering write-ups from the Weburz team.",
     title: "Blog",
   });
@@ -25,16 +14,10 @@
 
 <template>
   <UContainer class="py-12 sm:py-16">
-    <header class="max-w-3xl">
-      <p class="text-muted text-xs tracking-wider uppercase">Blog</p>
-      <h1 class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
-        Long-form engineering write-ups.
-      </h1>
-      <p class="text-muted mt-3">
-        Architecture decisions, production lessons, and tooling deep-dives from
-        the Weburz team.
-      </p>
-    </header>
+    <PageHeader eyebrow="Blog" title="Long-form engineering write-ups.">
+      Architecture decisions, production lessons, and tooling deep-dives from
+      the Weburz team.
+    </PageHeader>
 
     <section
       v-if="posts?.length"
