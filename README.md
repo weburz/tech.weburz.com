@@ -22,7 +22,7 @@ app/                     # Vue application
   app.config.ts          # Theme, header nav, footer, SEO/site name
   app.vue                # Root: layout shell, search overlay, head config
   components/            # Shared components (PostCard, CategoryArt, …)
-  layouts/               # blog/ (centered reading) + docs/ (sidebar)
+  layouts/               # docs/ (the UContainer + UPage shell for content pages)
   pages/
     index.vue            # Home: featured + recent + open-source teaser
     blog/                # /blog (index) + /blog/<slug> (post detail)
