@@ -83,7 +83,7 @@
 <template>
   <UPage v-if="page">
     <header class="mb-10 sm:mb-12">
-      <div class="max-w-5xl">
+      <div>
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="page.category" :category="page.category" />
           <time v-if="postDate" class="text-muted text-sm">
@@ -97,7 +97,7 @@
           {{ page.title }}
         </h1>
 
-        <p v-if="page.description" class="text-muted mt-4 max-w-3xl text-lg">
+        <p v-if="page.description" class="text-muted mt-4 text-lg">
           {{ page.description }}
         </p>
       </div>
@@ -125,7 +125,7 @@
       <UContentSurround :surround="surround" />
 
       <RelatedPosts
-        v-if="relatedPosts.length"
+        v-if="relatedPosts.length > 0"
         :posts="relatedPosts"
         class="lg:hidden"
       />
@@ -133,7 +133,7 @@
 
     <template #right>
       <UContentToc title="Table of Contents" :links="page.body?.toc?.links">
-        <template v-if="relatedPosts.length" #bottom>
+        <template v-if="relatedPosts.length > 0" #bottom>
           <USeparator type="dashed" />
           <RelatedPosts :posts="relatedPosts" />
         </template>
