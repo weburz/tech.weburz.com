@@ -10,7 +10,7 @@ description:
 date: 2026-09-03 08:43:30.057729+00:00
 author: somraj-saha
 category: Infrastructure
-cover: /blog/managing-infrastructure-drift.webp
+cover: /blog/infrastructure-drift.webp
 ---
 
 Every enterprise engineering team knows the dread of **"Configuration Drift."**
