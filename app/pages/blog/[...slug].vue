@@ -16,6 +16,8 @@
 
   const { getAuthor } = useAuthor();
 
+  const MAX_RELATED_POSTS = 3;
+
   definePageMeta({
     layout: "blog",
   });
@@ -39,6 +41,14 @@
     }),
   );
 
+  const { data: posts } = await useAsyncData(`${route.path}-related`, () =>
+    queryCollection("blog")
+      .where("path", "<>", route.path)
+      .select("path", "title", "date", "category")
+      .order("date", "DESC")
+      .all(),
+  );
+
   const title = page.value.seo?.title || page.value.title;
   const description = page.value.seo?.description || page.value.description;
 
@@ -53,6 +63,16 @@
 
   const author = computed(() => getAuthor(page.value?.author));
 
+  const relatedPosts = computed(() =>
+    (posts.value ?? [])
+      .toSorted(
+        (postA, postB) =>
+          Number(postB.category === page.value?.category) -
+          Number(postA.category === page.value?.category),
+      )
+      .slice(0, MAX_RELATED_POSTS),
+  );
+
   defineOgImage("Docs", {
     description,
     headline: page.value.category || undefined,
@@ -63,7 +83,7 @@
 <template>
   <UPage v-if="page">
     <header class="mb-10 sm:mb-12">
-      <div class="max-w-3xl">
+      <div>
         <div class="flex flex-wrap items-center gap-3">
           <CategoryChip v-if="page.category" :category="page.category" />
           <time v-if="postDate" class="text-muted text-sm">
@@ -98,15 +118,26 @@
     </header>
 
     <UPageBody>
-      <ContentRenderer :value="page" />
+      <ContentRenderer :value="page" class="text-lg" />
 
       <USeparator v-if="surround?.length" class="my-12" />
 
       <UContentSurround :surround="surround" />
+
+      <RelatedPosts
+        v-if="relatedPosts.length > 0"
+        :posts="relatedPosts"
+        class="lg:hidden"
+      />
     </UPageBody>
 
-    <template v-if="page?.body?.toc?.links?.length" #right>
-      <UContentToc title="Table of Contents" :links="page.body?.toc?.links" />
+    <template #right>
+      <UContentToc title="Table of Contents" :links="page.body?.toc?.links">
+        <template v-if="relatedPosts.length > 0" #bottom>
+          <USeparator type="dashed" />
+          <RelatedPosts :posts="relatedPosts" />
+        </template>
+      </UContentToc>
     </template>
   </UPage>
 </template>
