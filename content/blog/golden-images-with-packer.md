@@ -7,7 +7,7 @@ description:
 date: "2026-09-11T12:32:53+05:30"
 author: somraj-saha
 category: Infrastructure
-cover: /blog/infrastructure-drift.webp
+cover: /blog/golden-images-with-packer.webp
 ---
 
 ## The Multi-Cloud Image Dilemma
