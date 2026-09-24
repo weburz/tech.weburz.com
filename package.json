@@ -27,7 +27,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "nuxtseo-layer-devtools": "^5.3.9",
+    "nuxtseo-layer-devtools": "^5.3.16",
     "oxfmt": "^0.68.0",
     "oxlint": "^1.76.0",
     "oxlint-tsgolint": "^0.25.0",
