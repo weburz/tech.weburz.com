@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "nuxtseo-layer-devtools": "^5.3.9",
-    "oxfmt": "^0.61.0",
+    "oxfmt": "^0.68.0",
     "oxlint": "^1.76.0",
     "oxlint-tsgolint": "^0.25.0",
     "typescript": "^6.0.3",
