@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "**/*.ts"
+      - "**/*.vue"
+      - "**/*.css"
   pull_request:
     types:
       - synchronize
@@ -11,6 +15,10 @@ on:
       - ready_for_review
       - reopened
       - review_requested
+    paths:
+      - "**/*.ts"
+      - "**/*.vue"
+      - "**/*.css"
 
 jobs:
   oxlint:
