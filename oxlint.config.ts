@@ -163,6 +163,7 @@ export default defineConfig({
         ],
       },
     ],
+    "one-var": "off",
     "oxc/no-async-await": "allow",
     "oxc/no-optional-chaining": "allow",
     "oxc/no-rest-spread-properties": "allow",

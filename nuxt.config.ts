@@ -54,6 +54,7 @@ export default defineNuxtConfig({
             "console",
             "bash",
             "sql",
+            "systemd",
           ],
           theme: "github-dark",
         },
