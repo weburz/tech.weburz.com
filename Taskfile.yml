@@ -34,9 +34,13 @@ tasks:
 
       Run this once after cloning, and again whenever package.json or
       .pre-commit-config.yaml changes.
+    preconditions:
+      - sh: which vale
+        msg: vale not found, please install it before proceeding.
     cmds:
       - task: setup:pnpm
       - task: setup:pre-commit
+      - task: vale sync
 
   build:
     desc: Generate the static site (the same artifact GitHub Pages serves).
