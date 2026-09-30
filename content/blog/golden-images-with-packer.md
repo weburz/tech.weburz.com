@@ -20,7 +20,7 @@ At [Weburz](https://weburz.com), we operate across
 [Microsoft Azure](https://azure.microsoft.com) and
 [Vultr](https://www.vultr.com) for maximum redundancy and flexibility, in
 theory. On the flip side, in practice, it often means our engineering teams are
-trapped maintaining entirely separate, siloed processes for every single target
+trapped maintaining entirely separate, silo-ed processes for every single target
 environment. For the longest time, our own deployment velocity was crippled by
 this exact fragmentation. We weren't slowed down by our own code nor were we
 slowed down by our CI/CD pipelines. Instead what was slowing us down the most,
@@ -30,10 +30,10 @@ Early on, building a "golden image" meant logging into a base OS instance,
 manually installing security patches, tweaking local firewall settings,
 installing monitoring agents and running a final capture command. This capture
 command, it's logic, definition and use cases differ by the vendor's ecosystem,
-for e.g., Vultr has
+for example, Vultr has
 [Snapshots](https://docs.vultr.com/products/storage/snapshots) and Azure has
 [Compute Gallery](https://learn.microsoft.com/en-us/azure/virtual-machines/azure-compute-gallery).
-Each providing a unique feature set and an approach for creating/managing th
+Each providing a unique feature set and an approach for creating/managing the
 golden images.
 
 Whenever it was time to update a vulnerability or perform a security audit, our
@@ -82,8 +82,8 @@ images like special, hand-crafted artifacts.
 
 The shift from manual configuration to Infrastructure-as-Code (IaC) changed that
 dynamic entirely for us. Instead of clicking through cloud consoles or running
-unversioned shell scripts on live instances, your golden image definition became
-declarative code in the form of
+un-versioned shell scripts on live instances, your golden image definition
+became declarative code in the form of
 [HashiCorp Configuration Language (HCL)](https://github.com/hashicorp/hcl).
 Every package installation, security patch, system user, and configuration file
 is explicitly written out, reviewed in pull requests, and stored in a
@@ -224,10 +224,10 @@ teams can integrate vulnerability scanning tools directly into the CI/CD
 pipeline. All this is only possible thanks to how Packer integrates with the
 entire cloud vendor's ecosystem.
 
-Using tools that inspect container images, AMIs, or VM disks before they are
+Using tools that inspect container images, AMIs, or VM disks before they're
 published, you can automatically screen packages for known Common
 Vulnerabilities and Exposures (CVEs). If a package exceeds an acceptable risk
-threshold (e.g., a critical or high-severity CVE), the pipeline can
+threshold (for example, a critical or high-severity CVE), the pipeline can
 automatically fail the build, notifying developers and platform engineers to
 update their base packages before promotion.
 
@@ -248,7 +248,7 @@ security gates prior to publication, proving compliance becomes effortless.
 With our standardized image definitions and embedded security guardrails, the
 final operational hurdle is scale. If our engineering teams has to trigger
 builds for Azure, and Vultr sequentially, or worse, maintain separate scripts
-for each provider, our delivery pipeline remains bottlenecked by sheer
+for each provider, our delivery pipeline remains bottle-necked by sheer
 logistics. On the contrary, true multi-cloud scalability requires orchestrating
 builds across disparate cloud ecosystems simultaneously, all driven by a single
 source of truth.
@@ -339,10 +339,10 @@ as:
     and automated scan logs to prove our security posture.
 
 Having conquered the multi-cloud image dilemma, our sights are now set on the
-next frontier. We are currently exploring automated image lifecycle
+next frontier. We're currently exploring automated image lifecycle
 policies-automatically deprecating and aging out older VM Images and snapshots
 to ensure teams are always pulling the absolute freshest, most secure baselines.
-We are also looking into tighter integration with service meshes and ephemeral
+We're also looking into tighter integration with service meshes and ephemeral
 testing frameworks to validate image integrity instantly upon build completion.
 
 By treating our VM images as code, we didn't just speed up our deployments; we

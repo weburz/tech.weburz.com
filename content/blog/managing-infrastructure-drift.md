@@ -21,7 +21,7 @@ through manual intervention. A Software Development Engineer (SDE) applies a
 patch update directly to a production server via SSH. A database parameter is
 altered "temporarily" and forgotten. Months later, the production runtime
 environment diverge wildly from the requirements specified in the code
-repository. This turns the server in to nothing more than black box since it is
+repository. This turns the server in to nothing more than black box since it's
 undocumented and practically impossible to maintain when an audit hits or a
 disaster strikes.
 
@@ -42,7 +42,7 @@ where drift occurs and should be managed carefully:
 1. **The Image Layer:** Base AMIs or VMs age out, missing critical security
    patches or OS updates. For example, servers running Debian Stable may or may
    not be updated for years to come which—surprisingly is quite a common
-   practice in legacy environments. Left unamanaged, these aging images become
+   practice in legacy environments. Left un-managed, these aging images become
    prime targets for vulnerabilities because underlying package repositories and
    kernel versions fall too far behind modern security baselines.
 
@@ -69,12 +69,12 @@ The next section shows how we do it.
 
 Trying to patch running servers individually is a losing battle. Enterprise
 compliance mandates **immutable infrastructure** wherein, if a server needs a
-core OS update or security hardening, we do not patch it live but replace it
+core OS update or security hardening, we don't patch it live but replace it
 completely. This approach eliminates the ambiguity of long-lived servers which
 accumulate hidden technical debt over months or years of operation.
 
 - How it works is; [Packer](https://packer.io) bakes our security baselines
-  (such as hardended SSH and firewall configurations), compliance agents
+  (such as hardened SSH and firewall configurations), compliance agents
   ([Tailscale](https://tailscale.com)), and core software stack
   ([Docker](https://www.docker.com), [Restic](https://restic.net), etc) into a
   version-controlled "golden image" (aka, a "snapshot" on
@@ -122,8 +122,8 @@ periodic enforcement. To deal with such a scenario, we rely on
 
 - Ansible leverages **idempotency** since playbooks can run repeatedly against
   running infrastructure without altering the system unless an actual drift from
-  the desired state is discovered. This mkes it an ideal safety net of enforcing
-  runtime invariants without risking uintended service disruptions.
+  the desired state is discovered. This makes it an ideal safety net of
+  enforcing runtime invariants without risking unintended service disruptions.
 
 - While tools like [cloud-init](https://cloud-init.io) are often used during the
   initial boot sequences to bootstrap instances, we don't rely on `cloud-init`
@@ -159,7 +159,7 @@ for best practices on secrets management, template hardening and state file
 protection.
 
 While this write-up provides a brief outlook in to the Infrastructure-as-Code
-(IaC) tools we use to manage our infrastructure at Weburz, it is not detailed
+(IaC) tools we use to manage our infrastructure at Weburz, it's not detailed
 enough on its own. So, in a series of future articles, we will provide detailed
 guidelines on how we use each of the aforementioned tools for our infrastructure
 deployment workflow.
