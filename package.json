@@ -28,10 +28,10 @@
   },
   "devDependencies": {
     "nuxtseo-layer-devtools": "^5.3.16",
-    "oxfmt": "^0.68.0",
-    "oxlint": "^1.83.0",
-    "oxlint-tsgolint": "^7.0.2002",
-    "typescript": "^6.0.3",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "typescript": "^7.0.2",
     "vue-tsc": "^3.3.11"
   },
   "packageManager": "pnpm@11.21.0"
