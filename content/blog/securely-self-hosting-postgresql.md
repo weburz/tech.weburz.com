@@ -22,9 +22,9 @@ minutes browsing tech forums, and database administration is painted as a
 terrifying, high-stakes tightrope walk. You'll read endless horror stories about
 catastrophic downtime, misconfigured nodes, and nightmare recovery scenarios.
 But our experience at Weburz proved otherwise: if done right, maintaining a
-self-hosted [PostgreSQL](https://www.postgresql.com) server is not nearly as
+self-hosted [PostgreSQL](https://www.postgresql.com) server isn't nearly as
 scary as the internet portrays it to be. With the right blueprints, automation,
-and best practices, it is entirely manageable.
+and best practices, it's entirely manageable.
 
 Of course, moving away from a managed environment also meant tackling valid
 privacy and security concerns. We couldn't just throw a database onto the public
@@ -33,7 +33,7 @@ by hosting it safely behind robust on-premise firewalls and modern zero-trust
 networking tools like [Tailscale](https://tailscale.com), giving us total peace
 of mind over our data perimeter.
 
-In this article, we are pulling back the curtain on how we solved these exact
+In this article, we're pulling back the curtain on how we solved these exact
 challenges at Weburz. Follow along as we share our comprehensive, step-by-step
 guidelines on how we successfully self-host our PostgreSQL database
 server-cutting costs, reclaiming control, and keeping our data secure.
@@ -55,10 +55,10 @@ PostgreSQL is notoriously efficient, but its performance heavily depends on your
 underlying hardware-especially memory and disk throughput. When provisioning an
 Azure VM, we recommend:
 
-- Series Selection: Use General Purpose (e.g., Dv5 or Dasv5-series) or Memory
-  Optimized (e.g., Ev5-series) VMs. Memory-optimized instances are fantastic
-  because PostgreSQL relies heavily on caching data in RAM (`shared_buffers`),
-  which directly speeds up query execution.
+- Series Selection: Use General Purpose (for example, Dv5 or Dasv5-series) or
+  Memory Optimized (for example, Ev5-series) VMs. Memory-optimized instances are
+  fantastic because PostgreSQL relies heavily on caching data in RAM
+  (`shared_buffers`), which directly speeds up query execution.
 
 - vCPUs and RAM: A 2 vCPU / 8 GB RAM instance is a great starting point for
   standard workloads, but scale this up as your concurrent connections and
@@ -69,8 +69,7 @@ Azure VM, we recommend:
 Database operations involve frequent random reads and writes, meaning slow disks
 will instantly bottleneck your application.
 
-- Avoid Standard HDDs: Do not use Standard HDD storage for a production
-  database.
+- Avoid Standard HDDs: Don't use Standard HDD storage for a production database.
 
 - Premium SSDs / Ultra Disks: We strictly use Azure Premium SSDs (or Ultra Disks
   for heavy I/O workloads) to ensure high IOPS (Input/Output Operations Per
@@ -118,14 +117,14 @@ ready for the next step: installing and bootstrapping PostgreSQL.
 
 ## Installing PostgreSQL on Your Server
 
-With our Azure infrastructure and operating system foundation locked in, it is
+With our Azure infrastructure and operating system foundation locked in, it's
 time to get PostgreSQL up and running. At Weburz, we prefer a clean, native
 installation using the official PostgreSQL Global Development Group (PGDG) `apt`
 repository rather than default OS package repositories. This ensures we get the
 latest stable, performance-optimised versions of PostgreSQL directly from the
 maintainers.
 
-Here is th step-by-step process we follow to install PostgreSQL on our Debian
+Here is the step-by-step process we follow to install PostgreSQL on our Debian
 golden images:
 
 ### 1. Import the Official PostgreSQL Repository
@@ -224,7 +223,7 @@ Access the PostgreSQL interactive terminal (using the `psql` client):
 sudo --login --user postgres psql
 ```
 
-Run the following SQL commands to set a strorng password (replace
+Run the following SQL commands to set a strong password (replace
 `your_secure_password_here` with a robust generated password):
 
 ```sql
@@ -295,13 +294,13 @@ account.
 
 ### 4. Tuning Basic Resource Configurations
 
-Before opening your database up to the network, it is a good idea to adjust a
-few basic settings in the database configuration file, `postgresql.conf`. By
+Before opening your database up to the network, it's a good idea to adjust a few
+basic settings in the database configuration file, `postgresql.conf`. By
 default, the main configuration file is typically located at
 `/etc/postgresql/<VERSION>/main/postgresql.conf` (depending on your version of
 the database and Operating System).
 
-At Weburz, we do not recommend configuring this main file for two main reasons:
+At Weburz, we don't recommend configuring this main file for two main reasons:
 
 1. It can potentially be overwritten by software updates.
 2. In case of a catastrophic misconfiguration, we can always fallback to the
@@ -321,7 +320,7 @@ configurations in there.
 confusion and perhaps even version-control the configurations, if possible.
 
 The default configurations the database server ships with is a good source of
-reference for customisation. You can view it and you will the majority of it is
+reference for customisation. You can view it and you will the majority of it's
 commented out with additional reference documentation:
 
 ```console
@@ -353,7 +352,7 @@ to talk to the database.
 
 At Weburz, we enable remote access without compromising our perimeter security
 by combining PostgreSQL's native configuration files, Azure Network Security
-Group (NSG) rules and with our Tailscale zero-trust network. We obviously cannot
+Group (NSG) rules and with our Tailscale zero-trust network. We obviously can't
 share the details of our security protocols but we plan on writing a reference
 article on the topic some time in the near future.
 
@@ -379,7 +378,7 @@ listen_addresses = '*'
 
 **NOTE**: As a source of reference, find the line that controls
 `listen_addresses` in the main configuration file
-(`/etc/postgresql/<VERSION>/main/postgresql.conf`), by default, it is commented
+(`/etc/postgresql/<VERSION>/main/postgresql.conf`), by default, it's commented
 out or set to `localhost`. Change it to listen on all interfaces (`*`) or
 specifically on your server's internal Tailscale IP address:
 
@@ -422,10 +421,11 @@ host    lorem           john_doe        100.64.0.0/10           scram-sha-256
   PostgreSQL versions.
 
 **TIP**: At Weburz, we automate our database schema migration process in a CI/CD
-environment. For that we also assign a specific user (e.g., `migration_user`)
-and fine-tune it's permissions by following the principles of least-privileges.
-We then configure the `pg_hba.conf` file to allow the `migration_user` to only
-make network requests from the CI/CD server it is running on.
+environment. For that we also assign a specific user (for example,
+`migration_user`) and fine-tune it's permissions by following the principles of
+least-privileges. We then configure the `pg_hba.conf` file to allow the
+`migration_user` to only make network requests from the CI/CD server it's
+running on.
 
 When you are done configuring the authentication settings, save and close the
 file.
@@ -565,9 +565,9 @@ performance to keep things running smoothly.
 ## Setting Up Automated Backups and Monitoring
 
 Even the most secure and well-optimized database server is vulnerable to the
-unexpected-whether it is human error (like an accidental `DROP TABLE` in
+unexpected-whether it's human error (like an accidental `DROP TABLE` in
 production), hardware failure, or silent data corruption. At Weburz, we operate
-under a simple rule: **if it isn't backed up automatically, it doesn't exist**.
+under a simple rule: **if it's not backed up automatically, it doesn't exist**.
 
 Here is how we set up a robust backup and monitoring routine for our self-hosted
 PostgreSQL instances:
@@ -597,14 +597,14 @@ region suffers a catastrophic failure. To protect against this, we push our
 encrypted database dumps to secure offsite cloud storage.
 
 While a deep dive into our disaster recovery pipeline is coming in a future
-dedicated blog post, we rely heavily on [Restic](https://restic.net). It is a
+dedicated blog post, we rely heavily on [Restic](https://restic.net). it's a
 fast, secure, and incredibly efficient backup program-to handle deduplicated,
 encrypted offsite snapshots of our backup directories. It keeps our historical
 backups safe without ballooning our storage costs.
 
 ### 3. Monitoring Database Performance and Health
 
-You cannot manage what you do not measure. To keep an eye on CPU usage, memory
+You can't manage what you don't measure. To keep an eye on CPU usage, memory
 pressure, disk I/O, and active connections on our Azure VM, we implement
 lightweight monitoring tools:
 

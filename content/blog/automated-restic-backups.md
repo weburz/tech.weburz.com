@@ -11,11 +11,11 @@ cover: /blog/automated-restic-backups.webp
 ---
 
 At [Weburz](https://weburz.com), we rely on a suite of self-hosted services that
-power our day-to-day operations — [application](https://penpot.app) for design
+power our day-to-day operations; [application](https://penpot.app) for design
 collaboration, [Umami](https://umami.is) for analytics, and
 [Wiki.js](https://js.wiki) for internal knowledge management, among others. Each
-of these tools stores data that is critical to how we work, which means losing
-it is not a hypothetical scenario but an existential risk. That reality made
+of these tools stores data that's critical to how we work, which means losing
+it's not a hypothetical scenario but an existential risk. That reality made
 building a robust, automated backup pipeline one of our top infrastructure
 priorities.
 
@@ -30,7 +30,7 @@ Here is why we ultimately moved away from our legacy setup and standardised on
 Restic:
 
 1. **The Cost and Lock-in of Native Cloud Snapshots**: Provider-managed volume
-   snapshots like (e.g.,
+   snapshots like (for example,
    [Vultr Snapshots](https://docs.vultr.com/products/storage/snapshots) or
    [Azure managed disk snapshot](https://learn.microsoft.com/en-us/azure/virtual-machines/snapshot-copy-managed-disk))
    are undeniably convenient for quick point-in-time recovery. However, they
@@ -50,7 +50,7 @@ Restic:
    types, with 1 copy offsite) becomes an operational headache with fragmented
    tools. Trying to sync custom snapshots or raw archives across multiple
    disparate cloud providers and local storage targets usually results in
-   brittle, custom-coded sync logic that is prone to silent failures.
+   brittle, custom-coded sync logic that's prone to silent failures.
 
 4. **The Demands of Ransomware & Zero-Trust Requirements**: In a modern threat
    landscape, a backup is only as good as its isolation. If a production server
@@ -66,7 +66,7 @@ gave us a predictable, secure and highly efficient backup pipeline.
 
 ## Why We Chose Restic Instead
 
-We had mapped out our strict requirements and they were not a lot to ask for:
+We had mapped out our strict requirements and they weren't a lot to ask for:
 
 - Bulletproof security,
 - Efficiency at scale,
@@ -88,7 +88,7 @@ solution:
    down quite a lot.
 
 3. **Backend Flexibility**: Deployment is remarkably straightforward thanks to a
-   single, self-contained static binary. Whether we are pushing backups to a
+   single, self-contained static binary. Whether we're pushing backups to a
    S3-compatible
    [Vultr Object Storage](https://www.vultr.com/products/object-storage) or
    perhaps an
@@ -105,7 +105,7 @@ for better logging and error control.
 
 With Restic now standardised across our infrastructure, the next challenge was
 ensuring every backup ran reliably and that we maintained redundant copies of
-our data — one stored in a cloud storage service and another transferred to a
+our data; one stored in a cloud storage service and another transferred to a
 physical offsite server via SFTP. Automating this dual-target pipeline required
 moving beyond basic `cron` jobs in favour of something with stronger
 observability and control. Here is how we built it:
@@ -122,7 +122,7 @@ observability and control. Here is how we built it:
   backup attempts are retried multiple times before escalating to a team
   notification (usually using [ntfy.sh](https://ntfy.sh)). Regardless of the
   backup's execution state, these scripts always clean up the temporary dumps
-  afterwards in an idempotent manner, ensuring no plaintext data lingers on
+  afterwards in an idempotent manner, ensuring no plain-text data lingers on
   disk.
 
 - To prevent our repositories from bloating infinitely over time, we enforce a
@@ -144,9 +144,9 @@ maintaining strict security standards.
 
 ## A Sample Implementation for Reference
 
-For you reference, we are providing a simplified version of the standardised
+For you reference, we're providing a simplified version of the standardised
 backup script our `systemd` service invokes, along with the service and timer
-unit files that schedule it. The full logic mirrors what we described above —
+unit files that schedule it. The full logic mirrors what we described above;
 database dumping via `pg_dump`, Restic uploads with tags for filtering, offsite
 SFTP syncing, retention policy enforcement, and retry-based failure
 notification.
@@ -305,15 +305,15 @@ and silent data corruption. Here is how we lock down our backups in Azure:
   read permissions
   (`Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read`,
   `write`, `add`, and `list`). We strip out delete permissions entirely so that
-  a compromised application server cannot wipe its own backups. Pruning and
+  a compromised application server can't wipe its own backups. Pruning and
   snapshot expiration are handled exclusively by a separate, isolated
   maintenance worker.
 
-- **Automated Integrity Verification**: A backup which cannot be restored is
-  just expensive garbage. To prevent silent data corruption (bit rot) or
-  incomplete uploads from going unnoticed, we run scheduled `restic check` jobs
-  to periodically scan the repository index, verify chunk checksums and ensure
-  our recovery chain remain pristine.
+- **Automated Integrity Verification**: A backup which can't be restored is just
+  expensive garbage. To prevent silent data corruption (bit rot) or incomplete
+  uploads from going unnoticed, we run scheduled `restic check` jobs to
+  periodically scan the repository index, verify chunk checksums and ensure our
+  recovery chain remain pristine.
 
 By combining Azure's append-only guardrails with routine consistency checks, our
 backups remain both tamper-proof and verified. However, locking down the
@@ -322,11 +322,11 @@ fails and verify that we can actually recover from it.
 
 To ensure our backups are healthy and recoverable, we run periodic manual
 restoration exercises on a schedule (usually once or twice a year). This not
-only provides us the confidence in our backup pipeline(s) but also provides
+only provides us the confidence in our backup pipelines but also provides
 valuable experience to our engineering teams for disaster management and
 recovery drills.
 
 That said, we hope this article provided you with some knowledge and insight in
-to our infrastructure's backup management workflow. Since we're continuoulsy
+to our infrastructure's backup management workflow. Since we're continuously
 experimenting and evolving our backup pipelines, we will keep this piece of
 article updated as often as we can.

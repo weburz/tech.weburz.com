@@ -1,0 +1,51 @@
+name: Blog QA Checks
+
+on:
+  push:
+    branches: [main]
+    paths: ["**/*.md"]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths: ["**/*.md"]
+
+jobs:
+  formatter:
+    name: Run Oxfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install pnpm
+        uses: pnpm/setup@v3.0.0
+        with:
+          cache: true
+          require-lockfile: true
+
+      - name: Run Formatters
+        run: pnpm run fmt:check
+
+  spellchecker:
+    name: Run Vale
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Cache Vale styles
+        uses: actions/cache@v6.1.0
+        id: styles
+        with:
+          path: ./styles
+          key: vale-${{ hashFiles('.vale.ini') }}
+
+      - name: Run spell checker
+        uses: vale-cli/vale-action@v3.0.0
+        with:
+          reporter: github-pr-review
+          sync: ${{ steps.styles.outputs.cache-hit != 'true' }}
