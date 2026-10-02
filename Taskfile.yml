@@ -91,3 +91,12 @@ tasks:
       `task setup` and `task default` start fully clean.
     cmds:
       - rm --recursive --force .nuxt .output .data .cache node_modules .task
+
+  spellcheck:
+    desc: Run a spell check on the blog posts.
+    summary: |
+      Run a spell check on the blog posts.
+
+      This command uses Vale to run a spell check as well as check for
+      grammatical errors on the blog posts.
+    cmd: vale content/blog/*.md
