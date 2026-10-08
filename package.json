@@ -15,15 +15,15 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.137",
-    "@iconify-json/simple-icons": "^1.2.97",
+    "@iconify-json/lucide": "^1.2.139",
+    "@iconify-json/simple-icons": "^1.2.98",
     "@nuxt/content": "^3.16.1",
     "@nuxt/image": "^2.1.0",
-    "@nuxt/ui": "^4.11.2",
+    "@nuxt/ui": "^4.11.3",
     "@takumi-rs/core": "^2.14.0",
     "@vueuse/core": "^15.0.0",
     "nuxt": "^4.5.2",
-    "nuxt-og-image": "^6.9.0",
+    "nuxt-og-image": "^6.10.3",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
