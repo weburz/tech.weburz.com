@@ -28,11 +28,11 @@
   },
   "devDependencies": {
     "nuxtseo-layer-devtools": "^5.3.16",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
     "oxlint-tsgolint": "^7.0.2003",
     "typescript": "^7.0.2",
-    "vue-tsc": "^3.3.11"
+    "vue-tsc": "^3.3.12"
   },
   "packageManager": "pnpm@11.21.0"
 }
