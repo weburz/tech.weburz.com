@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://github.com/weburz/tech.weburz.com/actions/workflows/deploy.yml"><img alt="Deploy Site" src="https://github.com/weburz/tech.weburz.com/actions/workflows/deploy.yml/badge.svg"></a>
-  <a href="https://github.com/weburz/tech.weburz.com/actions/workflows/qa-checks.yml"><img alt="Code QA Checks" src="https://github.com/weburz/tech.weburz.com/actions/workflows/qa-checks.yml/badge.svg"></a>
+  <a href="https://github.com/weburz/tech.weburz.com/actions/workflows/website-qa.yml"><img alt="Code QA Checks" src="https://github.com/weburz/tech.weburz.com/actions/workflows/website-qa.yml/badge.svg"></a>
   <a href="https://tech.weburz.com"><img alt="Website status" src="https://img.shields.io/website?url=https%3A%2F%2Ftech.weburz.com&label=tech.weburz.com"></a>
   <a href="https://tech.weburz.com/rss.xml"><img alt="RSS feed" src="https://img.shields.io/badge/RSS-feed-F26522?logo=rss&logoColor=white"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/weburz/tech.weburz.com"></a>
