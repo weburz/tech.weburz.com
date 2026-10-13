@@ -59,8 +59,9 @@ README covers layout and content frontmatter in depth — read it before editing
 - `.env` stays out of git (see `.env.example`). `NUXT_PUBLIC_*` values are baked
   into the static HTML and must never contain secrets. The Umami website ID
   comes from the `UMAMI_WEBSITE_ID` Actions secret but remains visible in
-  generated HTML because Umami's browser tracker requires it; blank disables
-  analytics. Never add Umami API or account credentials to the client build.
+  generated HTML because Umami's browser tracker requires it. The script URL
+  comes from `UMAMI_SCRIPT_URL`; blanking either value disables analytics. Never
+  add Umami API or account credentials to the client build.
 - Pre-commit hooks block committing to `main` (`no-commit-to-branch`) and lint
   commit messages (Weburz/crisp) — work on a branch, conventional messages.
 - Push to `main` runs qa-checks + deploys `.output/public` via

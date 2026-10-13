@@ -35,6 +35,7 @@ jobs:
       - name: Generate Static Site
         run: pnpm run generate
         env:
+          UMAMI_SCRIPT_URL: ${{ secrets.UMAMI_SCRIPT_URL }}
           UMAMI_WEBSITE_ID: ${{ secrets.UMAMI_WEBSITE_ID }}
 
       - name: Upload Build Artifact
