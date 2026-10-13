@@ -156,11 +156,7 @@ export default defineConfig({
     "node/no-process-env": [
       "warn",
       {
-        allowedVariables: [
-          "CI",
-          "GITHUB_ACTIONS",
-          "NUXT_PUBLIC_UMAMI_WEBSITE_ID",
-        ],
+        allowedVariables: ["CI", "GITHUB_ACTIONS", "UMAMI_WEBSITE_ID"],
       },
     ],
     "one-var": "off",

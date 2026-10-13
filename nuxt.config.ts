@@ -2,7 +2,7 @@ import process from "node:process";
 
 import { defineNuxtConfig } from "nuxt/config";
 
-const umamiWebsiteId = process.env.NUXT_PUBLIC_UMAMI_WEBSITE_ID;
+const umamiWebsiteId = process.env.UMAMI_WEBSITE_ID;
 
 export default defineNuxtConfig({
   app: {
