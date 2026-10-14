@@ -159,7 +159,8 @@ export default defineConfig({
         allowedVariables: [
           "CI",
           "GITHUB_ACTIONS",
-          "NUXT_PUBLIC_UMAMI_WEBSITE_ID",
+          "UMAMI_SCRIPT_URL",
+          "UMAMI_WEBSITE_ID",
         ],
       },
     ],
