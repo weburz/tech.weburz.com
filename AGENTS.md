@@ -33,6 +33,8 @@ README covers layout and content frontmatter in depth — read it before editing
 - `tsconfig.json` extends the generated `.nuxt/tsconfig.json` — run
   `pnpm install` (postinstall runs `nuxt prepare`) before typechecking fresh
   clones.
+- TypeScript is pinned to 6.x because `vue-tsc` requires the classic compiler
+  API that TypeScript 7 no longer exports. Upgrade both tools together.
 - **Never rely on Nuxt auto-imports** — Oxlint keeps no `globals` allowlist, so
   an unimported composable fails `no-undef`. Import everything explicitly:
   - Vue APIs (`ref`, `computed`) → `vue`
