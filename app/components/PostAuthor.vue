@@ -4,12 +4,12 @@
   const MAX_INITIALS = 2;
 
   /**
-   * @description Displays an author block with avatar, name, role, and GitHub link. The
-   * avatar resolves to `author.avatar` when set, otherwise to the author's
-   * GitHub avatar via `https://github.com/<handle>.png`. If no avatar is
-   * available or the image fails to load, initials derived from `author.name`
-   * are shown instead. The GitHub link renders only when `author.github` is
-   * set.
+   * @description Displays an author block with avatar, name, role, and GitHub
+   * link. The avatar resolves to `author.avatar` when set, otherwise to the
+   * author's GitHub avatar via `https://github.com/<handle>.png`. If no avatar
+   * is available or the image fails to load, initials derived from
+   * `author.name` are shown instead. The GitHub link renders only when
+   * `author.github` is set.
    */
   interface Props {
     author: {
@@ -19,10 +19,10 @@
       avatar?: string;
     };
     /**
-     * @description Whether the GitHub handle renders as a link. Set to `false` when the
-     * block sits inside another anchor (e.g. a `PostCard`), since nesting an
-     * `<a>` within an `<a>` is invalid HTML — the browser splits the outer
-     * anchor while parsing, which breaks hydration.
+     * @description Whether the GitHub handle renders as a link. Set to `false`
+     * when the block sits inside another anchor (e.g. a `PostCard`), since
+     * nesting an `<a>` within an `<a>` is invalid HTML — the browser splits the
+     * outer anchor while parsing, which breaks hydration.
      */
     linkGithub?: boolean;
   }

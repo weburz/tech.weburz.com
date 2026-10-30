@@ -8,8 +8,8 @@
   }
 
   /**
-   * @description Lists other blog posts the reader might want to check out next, as a titled
-   * link list for the aside of a post.
+   * @description Lists other blog posts the reader might want to check out
+   * next, as a titled link list for the aside of a post.
    */
   interface Props {
     posts: Post[];
