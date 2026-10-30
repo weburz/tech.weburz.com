@@ -114,8 +114,8 @@ When a developer submits a pull request (PR) against the main branch:
 1. **Lint & Format Check:** Enforce code styling using `terraform fmt -check`
    and `terraform validate`.
 2. **Security Scanning:** Run static analysis tools like `tfsec` or `checkov` to
-   flag misconfigurations (e.g., publicly accessible storage buckets or wildcard
-   IAM permissions).
+   flag misconfigurations (for example, publicly accessible storage buckets or
+   wildcard IAM permissions).
 3. **Generate Plan:** Execute `terraform plan` against the target cloud
    provider.
 4. **Post Plan to PR:** Automatically attach the plan output as a comment on the
@@ -138,9 +138,9 @@ Once the PR is approved and merged into the main branch:
 ## 4. Securing Pipelines with OIDC (OpenID Connect)
 
 Historically, automated pipelines relied on long-lived API keys stored as secret
-environment variables (e.g., `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`).
-These keys require periodic rotation and create severe vulnerability risks if
-leaked.
+environment variables (for example, `AWS_ACCESS_KEY_ID` and
+`AWS_SECRET_ACCESS_KEY`). These keys require periodic rotation and create severe
+vulnerability risks if leaked.
 
 Modern CI/CD platforms (like GitHub Actions, GitLab CI, or CircleCI) support
 **OpenID Connect (OIDC)**, enabling keyless authentication.
@@ -150,7 +150,7 @@ Modern CI/CD platforms (like GitHub Actions, GitLab CI, or CircleCI) support
 1. The CI runner requests a short-lived JSON Web Token (JWT) from the CI
    provider.
 2. The runner presents this token to your cloud provider’s Identity Provider
-   (e.g., AWS IAM, GCP Workload Identity).
+   (for example, AWS IAM, GCP Workload Identity).
 3. The cloud provider verifies the identity token and exchanges it for
    **short-lived, temporary access credentials** strictly scoped to the duration
    of the pipeline job.
@@ -212,7 +212,7 @@ deviate from the defined codebase.
 
 To catch drift early:
 
-1. Set up a **scheduled nightly pipeline** (e.g., cron trigger) that runs
+1. Set up a **scheduled nightly pipeline** (for example, cron trigger) that runs
    `terraform plan -detailed-exitcode`.
 2. The `-detailed-exitcode` flag returns:
    - `0` – Succeeded with no changes.
