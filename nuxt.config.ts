@@ -78,14 +78,16 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: true,
       concurrency: 1,
-      crawlLinks: true,
       failOnError: true,
       interval: 0,
-      routes: ["/rss.xml"],
     },
   },
   ogImage: {
     zeroRuntime: true,
+  },
+  prerender: {
+    crawlLinks: true,
+    routes: ["/rss.xml"],
   },
   site: {
     name: "Tech at Weburz",
