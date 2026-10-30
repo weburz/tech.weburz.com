@@ -49,9 +49,9 @@ to a lack of visibility and auditability when someone executes `terraform apply`
 locally. There's no mandatory peer review, no centralised log history and no
 clear audit trail linking the code changes to the cloud events. You could say,
 "_there's a log history provided by the cloud service provider_" but I would say
-"_prevention is better than cure_". It is always better to be cautious and
-follow established Standard Operating Procedures (SOPs) rather than frantically
-figuring out resolutions when disaster strikes.
+"_prevention is better than cure_". It's always better to be cautious and follow
+established Standard Operating Procedures (SOP) rather than frantically figuring
+out resolutions when disaster strikes.
 
 There's also a risk of concurrency which is often overlooked (especially at
 smaller scale organisations). These issues arise in rare cases where two
@@ -78,7 +78,7 @@ insight in how we do it.
 
 ## Prerequisites: Remote State and Locking
 
-Before building a pipeline, it is necessary to ensure the state file is stored
+Before building a pipeline, it's necessary to ensure the state file is stored
 securely outside of local repositories since it contains a mapping of the
 declarative code to real-world infrastructure resources, along with sensitive
 output values. Terraform generates these state files with a `.tfstate` file
@@ -93,8 +93,8 @@ To store the state files safely, we recommend following this checklist below:
 
 At Weburz, we secure our Terraform state by storing the file in an Azure Blob
 Storage container (with strict RBAC rules applied to it). Terraform can
-fetch/store the state file to the remote container as long as it is configured
-to do so using an appropriate
+fetch/store the state file to the remote container as long as it's configured to
+do so using an appropriate
 ["backend"](https://developer.hashicorp.com/terraform/language/backend).
 
 Here is an example backend configuration using Microsoft Azure and Azure Blob
@@ -188,7 +188,7 @@ At Weburz, we use modern CI/CD platforms (like
 [**OpenID Connect (OIDC)**](https://openid.net), enabling secure and keyless
 authentication in our CI/CD environments.
 
-While providing a detailed explaination of the inner workings of OIDC is
+While providing a detailed explanation of the inner workings of OIDC is
 out-of-scope of this article, here's a brief description of we use it to
 authenticate to our cloud service providers.
 
@@ -253,13 +253,13 @@ here -
 Even with automated pipelines, out-of-band changes can happen; for example, a
 team member might modify a security group rule via the cloud console during an
 operational emergency. This creates **infrastructure drift**, where real-world
-resources deviate from the defined codebase. Hence it is important to handle it
+resources deviate from the defined codebase. Hence it's important to handle it
 as early in the pipeline as possible.
 
 Although we've not set up early detection and warning systems for infrastructure
 drift yet, we've it in our roadmap and here's how we plan on tackling it:
 
-1. Set up a **scheduled nightly pipeline** (for example, GitHub Actions's
+1. Set up a **scheduled nightly pipeline** (for example, GitHub Action's
    [`schedule`](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
    event) which runs `terraform plan -detailed-exitcode`.
 2. The `-detailed-exitcode` flag returns:
