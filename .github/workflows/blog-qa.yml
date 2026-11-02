@@ -41,8 +41,8 @@ jobs:
         uses: actions/cache@v6.1.0
         id: styles
         with:
-          path: ./styles
-          key: vale-${{ hashFiles('.vale.ini') }}
+          path: ./styles/Microsoft
+          key: vale-microsoft-${{ hashFiles('.vale.ini') }}
 
       - name: Run spell checker
         uses: vale-cli/vale-action@v3.0.0
