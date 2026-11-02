@@ -7,7 +7,7 @@ description:
 date: 2026-09-24T12:54:18+05:30
 author: somraj-saha
 category: Infrastructure
-cover: /blog/golden-images-with-packer.webp
+cover: /blog/taking-terraform-to-production.webp
 ---
 
 Infrastructure as Code (IaC) has revolutionized how modern engineering teams
