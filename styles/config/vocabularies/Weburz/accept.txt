@@ -31,3 +31,5 @@ serverless
 VM's
 Grafana
 [Bb]ackend
+CMSes
+Coolify
