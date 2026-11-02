@@ -137,7 +137,7 @@ infrastructure. Now we can design the SOP for the pipeline from publishing the
 IaC from the commit to peer review and approval then followed by the actual
 infrastructure provisioning in the next section.
 
-## 3. Designing the Two-Phase Pipeline Architecture
+## Designing the Two-Phase Pipeline Architecture
 
 At Weburz our SOP for managing the infrastructure using Terraform is as follows:
 
@@ -176,7 +176,7 @@ pipeline is triggered. This workflow checks out the updated default branch, runs
 infrastructure by running `terraform apply "main.tfplan"` (if any changes
 exist).
 
-## 4. Securing Pipelines with OIDC (OpenID Connect)
+## Securing Pipelines with OIDC (OpenID Connect)
 
 Historically, automated pipelines relied on long-lived API keys stored as secret
 environment variables (for example, `AWS_ACCESS_KEY_ID` and
@@ -248,7 +248,7 @@ manual one-time configurations though. You will find the details instructions
 here -
 [Configuring OpenID Connect in Azure ](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-azure).
 
-## 5. Continuous Drift Detection
+## Continuous Drift Detection
 
 Even with automated pipelines, out-of-band changes can happen; for example, a
 team member might modify a security group rule via the cloud console during an
