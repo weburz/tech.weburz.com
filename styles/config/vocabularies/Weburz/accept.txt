@@ -32,3 +32,5 @@ VM's
 Grafana
 [Bb]ackend
 codeowner
+CMSes
+Coolify
