@@ -81,7 +81,8 @@ curl -H "Authorization: Bearer $BURZBLOG_TOKEN" \
 - RSS, Atom, JSON Feed and sitemap out of the box
 - Deploy hook to rebuild your site on publish
 - Admin and author roles, TOTP two-factor sign-in, append-only audit log
-- Backups as a single download
+- Encrypted snapshots on demand or on a schedule, to a folder or S3-compatible
+  storage
 - Runs under systemd, Docker or Coolify
 
 ## Source
