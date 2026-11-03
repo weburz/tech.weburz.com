@@ -4,7 +4,7 @@ description:
   Learn how to automate Terraform with CI/CD pipelines. Discover OIDC
   authentication, automated PR plans, state locking, and drift detection for
   production IaC.
-date: 2026-09-24T12:54:18+05:30
+date: 2026-11-02T12:54:18+05:30
 author: somraj-saha
 category: Infrastructure
 cover: /blog/taking-terraform-to-production.webp
