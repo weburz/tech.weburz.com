@@ -1,6 +1,7 @@
 ---
 title: Rivu
-description: A modern TypeScript library for generating RSS 2.0 feeds programmatically. It
+description:
+  A modern TypeScript library for generating RSS 2.0 feeds programmatically. It
   enforces strict type safety, validates required channel metadata and produces
   a fully compliant RSS feed as an XML document.
 icon: i-simple-icons-typescript
