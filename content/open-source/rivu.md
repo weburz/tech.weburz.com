@@ -44,7 +44,7 @@ requirements, follow these instructions:
    pnpm add rivu
    ```
 
-2. Create a Node.js script (e.g., `feed.ts`).
+2. Create a Node.js script (for example, `feed.ts`).
 
    ```typescript
    import Feed from "rivu";
