@@ -34,12 +34,12 @@ export default defineNuxtConfig({
       script:
         umamiWebsiteId && umamiScriptUrl
           ? [
-              {
-                "data-website-id": umamiWebsiteId,
-                defer: true,
-                src: umamiScriptUrl,
-              },
-            ]
+            {
+              "data-website-id": umamiWebsiteId,
+              defer: true,
+              src: umamiScriptUrl,
+            },
+          ]
           : [],
     },
   },
@@ -57,6 +57,7 @@ export default defineNuxtConfig({
             "bash",
             "sql",
             "systemd",
+            "xml",
             "yaml",
           ],
           theme: "github-dark",
