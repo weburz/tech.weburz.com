@@ -1,7 +1,7 @@
 ---
-title: Why We Standardized on Terraform for Cloud Infrastructure
+title: How We Standardized on Terraform for Cloud Infrastructure
 description:
-  Discover why we standardized our cloud infrastructure on Terraform. Learn how
+  Discover how we standardized our cloud infrastructure on Terraform. Learn how
   Infrastructure as Code (IaC) eliminated drift, accelerated deployments, and
   scaled our workflows.
 date: 2026-11-05T12:39:55+05:30
@@ -9,6 +9,19 @@ author: somraj-saha
 category: infrastructure
 cover: /blog/standardised-terraform-practices.webp
 ---
+
+In our initial days at **[Weburz](https://weburz.com)**, manual intervention to
+provision cloud resources on [Microsoft Azure](https://microsoft.azure.com) was
+slowing us down. It created bottlenecks and friction across our engineering
+workflows. Relying on manual steps simply couldn't keep pace with our rapid
+deployment needs as we design and implemented our infrastructure requirements.
+
+To eliminate configuration drift and speed up our delivery cycles, we turned to
+Infrastructure as Code principles using [Terraform](https://terraform.io) to
+automate our pipelines. In this post, we dive into practical patterns for
+writing clean HCL configurations, managing state efficiently, and provisioning
+cloud architectures with absolute confidence as we share our experience and
+learnings in this blog post.
 
 ## The "Before" State: The Pain Points of Not Having Terraform
 
