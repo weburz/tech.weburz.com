@@ -25,18 +25,42 @@ learnings in this blog post.
 
 ## The "Before" State: The Pain Points of Not Having Terraform
 
-Configuration Drift: Manual changes in the cloud console leading to environments
-that no longer matched.
+Before adopting Infrastructure as Code (IaC) at Weburz, managing our cloud
+infrastructure relied heavily on manual processes and web console adjustments.
+While this hands-on approach worked during our earliest phases, scaling our
+architecture quickly exposed significant vulnerabilities in our operational
+workflow.
 
-"ClickOps" and Human Error: Relying on manual UI clicks, making deployments
-non-repeatable, hard to audit, and prone to mistakes.
+Perhaps the biggest issue we faced with manual intervention to manage our
+infrastructure was ["configuration drift"](/blog/managing-infrastructure-drift).
 
-Knowledge Silos: Infrastructure knowledge being locked inside the heads of
-specific team members rather than documented in code.
+Without a single source of truth, manual tweaks in the cloud console; whether
+quickly adjusting a security group rule or resizing a virtual machine, created
+invisible divergence across our environments. Over time, actual cloud
+infrastructure drifted far from our documented configurations resulting in
+troubleshooting issues becoming an exercise in guesswork.
 
-Inconsistent Environments: Difficulties in spinning up identical staging, QA,
-and production environments, leading to "it works on my machine" equivalent for
-cloud infrastructure.
+We jokingly addressed these manual operations as "ClickOps" and almost always
+held our breadth when upgrading or auditing our infrastructure. Our reliance on
+navigating through UI menus to manually configure services introduced an
+unnecessary risk of human error. We often overlooked crucial settings stating
+"temporary workarounds" but making deployments non-repeatable, difficult to
+audit, and highly susceptible to mistakes that could disrupt production
+services.
+
+Over time we also realised how critical infrastructure details were stored
+primarily in the heads of a few specific team members rather than being
+documented systematically. This created single points of failure; if the person
+(who set up a particular database cluster or network route) was unavailable, the
+team faced unnecessary hurdles in modifying or scaling those resources.
+
+The third issue we identified was spinning up identical deployment environments.
+Setting up staging, QA, and production environments was nearly impossible using
+our archaic manual provisioning. Small discrepancies between environments
+frequently led to the cloud infrastructure equivalent of the classic "it works
+on my machine" problem. Our application builds sometimes passed smoothly in the
+developer's local testing environment, only to fail upon hitting production due
+to underlying environment mismatched configurations.
 
 ## Why Terraform? (The Evaluation & Decision)
 
