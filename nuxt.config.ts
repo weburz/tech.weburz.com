@@ -75,7 +75,10 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
-  modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/content", "nuxt-og-image"],
+  linkChecker: {
+    failOnError: true,
+  },
+  modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/content", "@nuxtjs/seo"],
   nitro: {
     prerender: {
       autoSubfolderIndex: true,
@@ -92,8 +95,13 @@ export default defineNuxtConfig({
     routes: ["/rss.xml"],
   },
   site: {
+    description:
+      "Engineering writing and open-source projects from the Weburz team.",
     name: "Tech at Weburz",
     url: "https://tech.weburz.com",
+  },
+  sitemap: {
+    exclude: ["/200", "/404"],
   },
   ui: {
     theme: {

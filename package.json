@@ -20,10 +20,10 @@
     "@nuxt/content": "^3.16.2",
     "@nuxt/image": "^2.2.0",
     "@nuxt/ui": "^4.12.0",
+    "@nuxtjs/seo": "^6.0.1",
     "@takumi-rs/core": "^2.18.1",
     "@vueuse/core": "^15.0.0",
     "nuxt": "^4.6.3",
-    "nuxt-og-image": "^7.0.7",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
