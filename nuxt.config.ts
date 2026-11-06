@@ -100,9 +100,6 @@ export default defineNuxtConfig({
     name: "Tech at Weburz",
     url: "https://tech.weburz.com",
   },
-  sitemap: {
-    exclude: ["/200", "/404"],
-  },
   ui: {
     theme: {
       colors: [
