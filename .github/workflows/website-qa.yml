@@ -15,10 +15,6 @@ on:
       - ready_for_review
       - reopened
       - review_requested
-    paths:
-      - "**/*.ts"
-      - "**/*.vue"
-      - "**/*.css"
 
 jobs:
   oxlint:
