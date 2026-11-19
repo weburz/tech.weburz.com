@@ -84,7 +84,7 @@ Configuration Language (HCL) and a consistent execution lifecycle (`init`,
 `plan`, `apply`, `destroy`), engineers apply the same authoring, code review,
 and automation practices regardless of the underlying platform.
 
-While cloud-agnostic execution does not make vendor-specific abstractions
+While cloud-agnostic execution doesn't make vendor-specific abstractions
 identical, for example, Azure RBAC models remain structurally distinct from
 other providers (such as Vultr), standardising the operational layer eliminates
 context switching and simplifies hybrid or multi-provider architectures.
