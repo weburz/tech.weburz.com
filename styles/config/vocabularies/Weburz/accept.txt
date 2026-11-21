@@ -35,3 +35,5 @@ codeowner
 CMSes
 Coolify
 [rR]ivu
+guardrails
+Hashicorp
