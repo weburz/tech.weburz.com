@@ -2,23 +2,13 @@ name: "Code QA Checks"
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "**/*.ts"
-      - "**/*.vue"
-      - "**/*.css"
+    branches: [main]
   pull_request:
     types:
       - synchronize
       - opened
       - ready_for_review
       - reopened
-      - review_requested
-    paths:
-      - "**/*.ts"
-      - "**/*.vue"
-      - "**/*.css"
 
 jobs:
   oxlint:
