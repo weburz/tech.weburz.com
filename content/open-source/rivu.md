@@ -47,7 +47,7 @@ requirements, follow these instructions:
 2. Create a Node.js script (for example, `feed.ts`).
 
    ```typescript
-   import Feed from "rivu";
+   import { Feed } from "rivu";
 
    const feed = new Feed(
      {
