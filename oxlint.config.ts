@@ -110,6 +110,7 @@ export default defineConfig({
       // files via `pnpm typecheck`.
       files: ["server/**/*.ts"],
       rules: {
+        "max-lines-per-function": "off",
         "typescript/no-unnecessary-condition": "allow",
         "typescript/no-unsafe-argument": "allow",
         "typescript/no-unsafe-assignment": "allow",
