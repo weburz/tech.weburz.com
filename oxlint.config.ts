@@ -24,6 +24,9 @@ export default defineConfig({
     "shared-node-browser": true,
     vue: true,
   },
+  globals: {
+    process: "readonly",
+  },
   ignorePatterns: [
     ".data",
     ".nuxt",
