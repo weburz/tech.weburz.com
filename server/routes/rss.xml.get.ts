@@ -1,60 +1,61 @@
 import { queryCollection } from "@nuxt/content/server";
 import { eventHandler, setHeader } from "h3";
+import { version } from "nuxt/package.json";
+import { Feed } from "rivu";
 
 import { getSiteConfig } from "#site-config/server/composables";
 
-const escape = (text: string | undefined): string =>
-  (text ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
-
 export default eventHandler(async (event) => {
+  // Get the site-wide configurations for the application.
   const site = getSiteConfig(event);
-  const baseUrl = site.url;
 
+  // Fetch the list of blog posts to render the XML tree.
   const posts = await queryCollection(event, "blog")
     .order("date", "DESC")
     .all();
 
-  const items = posts
-    .map((post) => {
-      const link = `${baseUrl}${post.path}`;
-      const pubDate = new Date(post.date ?? Date.now()).toUTCString();
-      const author = post.author
-        ? `<author>${escape(post.author)}</author>`
-        : "";
-      const category = post.category
-        ? `<category>${escape(post.category)}</category>`
-        : "";
-      return `    <item>
-      <title>${escape(post.title)}</title>
-      <link>${link}</link>
-      <guid isPermaLink="true">${link}</guid>
-      <description>${escape(post.description)}</description>
-      <pubDate>${pubDate}</pubDate>
-      ${author}
-      ${category}
-    </item>`;
-    })
-    .join("\n");
+  // Create an instance of today's date and time.
+  const today = new Date();
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>${escape(site.name)}</title>
-    <link>${baseUrl}</link>
-    <description>Engineering writing from the Weburz team.</description>
-    <language>en</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
-${items}
-  </channel>
-</rss>
-`;
+  // Construct the RSS feed with all the necessary details rendered from the blog posts.
+  const feed = new Feed(
+    {
+      category: "Technology",
+      copyright: `Weburz © 2026-${new Date().getFullYear()}`,
+      description: site.description,
+      generator: `Nuxt.js ${version} (Node.js ${process.version})`,
+      items: posts.map((post) => ({
+        category: post.category,
+        description: post.description,
+        guid: `${post.id}`,
+        link: `${site.url}${post.path}`,
+        title: post.title,
+      })),
+      language: "en-US",
+      lastBuildDate: today,
+      link: site.url,
+      managingEditor: "Somraj Saha",
+      pubDate: today,
+      title: site.name,
+      ttl: 1440,
+      webMaster: "Somraj Saha",
+    },
+    {
+      feedURL: `${site.url}/rss.xml`,
+      stylesheet: new URL(
+        "rss.xsl",
+        import.meta.dev ? "http://localhost:3001" : site.url,
+      ),
+    },
+  );
 
-  setHeader(event, "Content-Type", "application/rss+xml; charset=utf-8");
-  return xml;
+  // Construct the XML tree
+  const generatedFeed = feed.generate();
+
+  // Set the header for the browser to properly identify the content-type of the rendered
+  // contents.
+  setHeader(event, "Content-Type", "text/xml");
+
+  // Return the newly constructed XML tree on request.
+  return generatedFeed;
 });
