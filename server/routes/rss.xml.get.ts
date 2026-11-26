@@ -42,7 +42,10 @@ export default eventHandler(async (event) => {
     },
     {
       feedURL: `${site.url}/rss.xml`,
-      stylesheet: new URL("rss.xsl", "http://localhost:3001"),
+      stylesheet: new URL(
+        "rss.xsl",
+        import.meta.dev ? "http://localhost:3001" : site.url,
+      ),
     },
   );
 
