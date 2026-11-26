@@ -18,27 +18,33 @@ export default eventHandler(async (event) => {
   const today = new Date();
 
   // Construct the RSS feed with all the necessary details rendered from the blog posts.
-  const feed = new Feed({
-    category: "Technology",
-    copyright: `Weburz © 2026-${new Date().getFullYear()}`,
-    description: site.description,
-    generator: `Nuxt.js ${version} (Node.js ${process.version})`,
-    items: posts.map((post) => ({
-      category: post.category,
-      description: post.description,
-      guid: `${post.id}`,
-      link: `${site.url}${post.path}`,
-      title: post.title,
-    })),
-    language: "en-US",
-    lastBuildDate: today,
-    link: site.url,
-    managingEditor: "Somraj Saha",
-    pubDate: today,
-    title: site.name,
-    ttl: 1440,
-    webMaster: "Somraj Saha",
-  });
+  const feed = new Feed(
+    {
+      category: "Technology",
+      copyright: `Weburz © 2026-${new Date().getFullYear()}`,
+      description: site.description,
+      generator: `Nuxt.js ${version} (Node.js ${process.version})`,
+      items: posts.map((post) => ({
+        category: post.category,
+        description: post.description,
+        guid: `${post.id}`,
+        link: `${site.url}${post.path}`,
+        title: post.title,
+      })),
+      language: "en-US",
+      lastBuildDate: today,
+      link: site.url,
+      managingEditor: "Somraj Saha",
+      pubDate: today,
+      title: site.name,
+      ttl: 1440,
+      webMaster: "Somraj Saha",
+    },
+    {
+      feedURL: `${site.url}/rss.xml`,
+      stylesheet: new URL("rss.xsl", "http://localhost:3001"),
+    },
+  );
 
   // Construct the XML tree
   const generatedFeed = feed.generate();
