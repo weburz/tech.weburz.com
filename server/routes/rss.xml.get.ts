@@ -1,60 +1,29 @@
-import { queryCollection } from "@nuxt/content/server";
 import { eventHandler, setHeader } from "h3";
+import { Feed } from "rivu";
 
-import { getSiteConfig } from "#site-config/server/composables";
+export default eventHandler((event) => {
+  const feed = new Feed({
+    description: "Notes on building things.",
+    items: [
+      {
+        author: "jane@example.com (Jane Doe)",
+        category: ["intro", "meta"],
+        description: "<p>The first post.</p>",
+        guid: "https://example.com/posts/hello-world",
+        link: "https://example.com/posts/hello-world",
+        pubDate: new Date("2025-10-10T08:00:00Z"),
+        title: "Hello, world",
+      },
+    ],
+    language: "en-US",
+    lastBuildDate: new Date("2025-10-12T09:30:00Z"),
+    link: "https://example.com",
+    title: "Example Blog",
+  });
 
-const escape = (text: string | undefined): string =>
-  (text ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
+  const generatedFeed = feed.generate();
 
-export default eventHandler(async (event) => {
-  const site = getSiteConfig(event);
-  const baseUrl = site.url;
+  setHeader(event, "Content-Type", "text/xml");
 
-  const posts = await queryCollection(event, "blog")
-    .order("date", "DESC")
-    .all();
-
-  const items = posts
-    .map((post) => {
-      const link = `${baseUrl}${post.path}`;
-      const pubDate = new Date(post.date ?? Date.now()).toUTCString();
-      const author = post.author
-        ? `<author>${escape(post.author)}</author>`
-        : "";
-      const category = post.category
-        ? `<category>${escape(post.category)}</category>`
-        : "";
-      return `    <item>
-      <title>${escape(post.title)}</title>
-      <link>${link}</link>
-      <guid isPermaLink="true">${link}</guid>
-      <description>${escape(post.description)}</description>
-      <pubDate>${pubDate}</pubDate>
-      ${author}
-      ${category}
-    </item>`;
-    })
-    .join("\n");
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>${escape(site.name)}</title>
-    <link>${baseUrl}</link>
-    <description>Engineering writing from the Weburz team.</description>
-    <language>en</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
-${items}
-  </channel>
-</rss>
-`;
-
-  setHeader(event, "Content-Type", "application/rss+xml; charset=utf-8");
-  return xml;
+  return generatedFeed;
 });
